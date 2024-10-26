@@ -1,0 +1,44 @@
+Remove-Item -Recurse -Force .\node_modules
+
+Remove-Item .\package.json, .\package-lock.json
+
+npm uninstall -g nodemon eslint prettier
+
+mongoose
+path
+url
+fs
+express
+multer
+dotenv
+node-cron
+passport
+passport-google-oauth20
+colors
+helmet
+cookie-session
+cors
+morgan
+
+# Create and navigate to the backend directory
+mkdir backend
+cd backend
+
+# Initialize a new Node.js project
+npm init -y
+
+# Install required dependencies
+npm install mongoose path url fs express multer dotenv node-cron passport passport-google-oauth20 colors helmet cookie-session cors morgan
+
+# Install optional dependencies
+npm install bcryptjs jsonwebtoken express-validator
+
+# Install development dependencies
+npm install --save-dev nodemon eslint prettier
+
+# Set up basic files and folders
+New-Item -Path . -Name "server.js" -ItemType "file"
+New-Item -Path . -Name ".env" -ItemType "file"
+
+# Run the server
+npm run dev
