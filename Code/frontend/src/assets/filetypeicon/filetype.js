@@ -11,7 +11,7 @@ import docx from "./docx.png";
 import docx_01 from "./docx-01.png";
 import docx_02 from "./docx-02.png";
 import pdf from "./pdf.png";
-import pdf_01 from "./pdf-01.png";
+import pdf_01 from "./pdf-01.jpg";
 import pdf_02 from "./pdf-02.jpg";
 import plus from "./plus.png";
 import png from "./png.png";

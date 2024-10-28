@@ -1,22 +1,34 @@
-// frontend/src/App.jsx
-import React from "react";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import { Outlet } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useGetInfoQuery } from "./slices/authApiSlice";
+import { useEffect } from "react";
+import { setCredentials } from "./slices/authSlice";
 
 const App = () => {
-  const [message, setMessage] = React.useState("");
+  const dispatch = useDispatch();
+  const { data: user, isLoading } = useGetInfoQuery();
 
-  // Fetch message from backend
-  React.useEffect(() => {
-    fetch("http://localhost:5000/api/test")
-      .then((response) => response.json())
-      .then((data) => setMessage(data.message))
-      .catch((error) => console.error("Error fetching message:", error));
-  }, []);
+  useEffect(() => {
+    if (isLoading) return;
+    dispatch(setCredentials({ ...user?.user }));
+  }, [user, dispatch, isLoading]);
 
   return (
-    <div style={{ textAlign: "center", marginTop: "50px" }}>
-      <h1>Frontend-Backend Connection Test</h1>
-      <p>{message || "Loading message from backend..."}</p>
-    </div>
+    <>
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : (
+        <>
+          <Header />
+          <main className="p-10 min-h-[500px] bg-white-fill">
+            <Outlet />
+          </main>
+          <Footer />
+        </>
+      )}
+    </>
   );
 };
 
