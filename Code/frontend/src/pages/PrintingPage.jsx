@@ -15,7 +15,6 @@ const PrintingPage = () => {
   const { data: printers, isLoading: isPrintersLoading } = useGetPrinterQuery();
   const { data: files, isLoading: isFilesLoading } = useGetFilesByUserQuery();
 
-
   const createTabItem = (label, value, icon, desc) => ({
     label,
     value,
@@ -35,9 +34,7 @@ const PrintingPage = () => {
           "Danh sách tài liệu",
           "2",
           <ListBulletIcon className="w-10" />,
-          <FileList
-            files={files}
-          />,
+          <FileList files={files} />,
         ),
         createTabItem(
           "Mua giấy in",
@@ -52,7 +49,7 @@ const PrintingPage = () => {
     <div>Loading...</div>
   ) : (
     <>
-      <Typography variant="h4">IN NGAY</Typography>
+      <Typography variant="h4">PRINT NOW</Typography>
       <VerticalTabs item={tabItems} />
     </>
   );

@@ -47,30 +47,22 @@ const Header = () => {
 
   const navList = (
     <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-14">
-      {role ? generateNavItem(<HomeIcon />, "/", "TRANG CHỦ") : null}
+      {role ? generateNavItem(<HomeIcon />, "/", "HOMEPAGE") : null}
 
       {role === "customer"
-        ? generateNavItem(<ClockIcon />, "/history", "LỊCH SỬ IN")
+        ? generateNavItem(<ClockIcon />, "/history", "PRINTING HISTORY")
         : role === "SPSO"
-          ? generateNavItem(
-              <PrinterIcon />,
-              "/admin/printer-manage",
-              "QUẢN LÝ MÁY IN",
-            )
-          : generateNavItem(<UserIcon />, "/login", "ĐĂNG NHẬP")}
+          ? generateNavItem(<PrinterIcon />, "/admin/printer-manage", "PRINTER")
+          : generateNavItem(<UserIcon />, "/login", "LOGIN")}
 
       {role === "SPSO"
-        ? generateNavItem(
-            <CogIcon />,
-            "/admin/printing-manage",
-            "QUẢN LÝ IN ẤN",
-          )
+        ? generateNavItem(<CogIcon />, "/admin/printing-manage", "PRINTING")
         : role === "customer"
-          ? generateNavItem(<PrinterIcon />, "/printing", "IN NGAY")
+          ? generateNavItem(<PrinterIcon />, "/printing", "PRINT NOW")
           : null}
 
       {role === "SPSO"
-        ? generateNavItem(<ClockIcon />, "/admin/history", "LỊCH SỬ IN")
+        ? generateNavItem(<ClockIcon />, "/admin/history", "PRINTING HISTORY")
         : null}
     </ul>
   );
@@ -85,10 +77,10 @@ const Header = () => {
           <img className="col-span-1 w-16" src={logo} alt="logo" />
           <div className="col-span-4 flex flex-col">
             <Typography variant="small" color="white">
-              TRƯỜNG ĐẠI HỌC BÁCH KHOA
+              HO CHI MINH CITY UNIVERSITY OF TECHNOLOGY (HCMUT)
             </Typography>
             <Typography variant="small" color="white" className="font-bold">
-              HỆ THỐNG IN ẤN SINH VIÊN
+              STUDENT SMART PRINTING SERVICES
             </Typography>
           </div>
         </Link>

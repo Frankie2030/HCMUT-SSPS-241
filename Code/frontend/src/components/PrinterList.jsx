@@ -3,8 +3,13 @@ import {
   Typography,
   Button,
   IconButton,
+  Dialog,
+  DialogHeader,
+  DialogBody,
+  DialogFooter,
 } from "@material-tailwind/react";
-import PrinterImage from "../assets/PrinterImage.png";
+// import PrinterImage from "../assets/PrinterImage.png";
+import PrinterImage from "../assets/PrinterImage-02.avif";
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
 import { useState, useEffect } from "react";
 import FileUploadDialog from "./FileUploadDialog";
@@ -28,6 +33,8 @@ const PrinterItem = ({ printer, canSelect }) => {
   const [setStatus] = useSetStatusMutation();
   const [deletePrinter] = useDeletePrinterMutation();
 
+  const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
+
   const handleChange = async () => {
     await setStatus({
       id: printer._id,
@@ -42,19 +49,35 @@ const PrinterItem = ({ printer, canSelect }) => {
     window.location.reload();
   };
 
+  const openDeleteConfirmation = () => {
+    setConfirmDeleteOpen(true);
+  };
+
+  const closeDeleteConfirmation = () => {
+    setConfirmDeleteOpen(false);
+  };
+
+  const confirmDelete = async () => {
+    await handleDelete();
+    closeDeleteConfirmation();
+  };
+
   return (
     <div className="grid grid-cols-6 items-center gap-10">
-      <img src={PrinterImage} className="col-span-1" />
+      <img src={PrinterImage} className="col-span-1" alt="Printer" />
       <div className="col-span-3">
         <Typography variant="h5" color="blue-gray" className="mb-2 font-bold">
-          Số hiệu: {printer.number}
+          Number: {printer.number}
         </Typography>
-        <Typography variant="h5" color="blue-gray" className="mb-2 font-bold">
-          Vị Trí:{" "}
+        <Typography variant="h6" color="blue-gray" className="mb-2 font-bold">
+          Location:{" "}
           {`${printer.location.campus} - ${printer.location.building} - ${printer.location.room}`}
         </Typography>
-        <Typography variant="h5" color="blue-gray" className="mb-2 font-bold">
-          Hàng chờ: {printer.queue}
+        <Typography variant="h6" color="blue-gray" className="mb-2 font-bold">
+          In Queue: {printer.queue}
+        </Typography>
+        <Typography variant="h6" color="blue-gray" className="mb-2 font-bold">
+          Description: {printer.description}
         </Typography>
       </div>
       {canSelect ? (
@@ -66,7 +89,7 @@ const PrinterItem = ({ printer, canSelect }) => {
               className="w-4/5 rounded-full font-medium"
               onClick={handleOpen}
             >
-              Chọn
+              Choose
             </Button>
           </div>
           <FileUploadDialog
@@ -99,9 +122,9 @@ const PrinterItem = ({ printer, canSelect }) => {
               color="red"
               size="lg"
               className="rounded-full font-medium"
-              onClick={handleDelete}
+              onClick={openDeleteConfirmation}
             >
-              Xóa
+              Delete
             </Button>
             <IconButton variant="text" onClick={handleOpenInfo}>
               <InformationCircleIcon className="w-7" color="blue" />
@@ -114,6 +137,20 @@ const PrinterItem = ({ printer, canSelect }) => {
           />
         </>
       )}
+
+      {/* Delete Confirmation Dialog */}
+      <Dialog open={confirmDeleteOpen} handler={setConfirmDeleteOpen}>
+        <DialogHeader>Confirm Deletion</DialogHeader>
+        <DialogBody>Are you sure you want to delete this printer?</DialogBody>
+        <DialogFooter>
+          <Button color="red" onClick={confirmDelete} className="mr-2">
+            Yes
+          </Button>
+          <Button color="blue-gray" onClick={closeDeleteConfirmation}>
+            Cancel
+          </Button>
+        </DialogFooter>
+      </Dialog>
     </div>
   );
 };

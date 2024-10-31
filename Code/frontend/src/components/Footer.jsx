@@ -3,14 +3,8 @@ import logo from "../assets/logo.png";
 
 const LINKS = [
   {
-    title: "Thông tin liên hệ và hỗ trợ",
-    items: [
-      "Sinh viên",
-      "MyBK",
-      "Quý khách",
-      "Email",
-      "Biểu mẫu thông tin liên hệ",
-    ],
+    title: "Contact Information and Support",
+    items: ["Student", "MyBK", "Customer", "Email", "Contact Information Form"],
   },
 ];
 
@@ -25,20 +19,20 @@ const Footer = () => {
             <img className="col-span-2 w-20" src={logo} alt="logo" />
             <div className="col-span-3 flex flex-col lg:col-span-8">
               <Typography variant="small" color="white">
-                TRƯỜNG ĐẠI HỌC BÁCH KHOA
+                HO CHI MINH CITY UNIVERSITY OF TECHNOLOGY (HCMUT)
               </Typography>
               <Typography variant="small" color="white" className="font-bold">
-                HỆ THỐNG IN ẤN SINH VIÊN
+                STUDENT SMART PRINTING SYSTEM
               </Typography>
             </div>
             <div className="col-span-10">
               <Typography color="white" className="mb-3 text-justify">
-                Cơ sở Lý Thường Kiệt: 268 Lý Thường Kiệt, Phường 14, Quận 10,
-                TP. HCM
+                Ly Thuong Kiet Campus: 268 Ly Thuong Kiet, Ward 14, District 10,
+                Ho Chi Minh City
               </Typography>
               <Typography color="white" className="text-justify">
-                Cơ sở Dĩ An: Khu phố Tân Lập, Phường Đông Hòa, TP. Dĩ An, Tỉnh
-                Bình Dương
+                Di An Campus: Tan Lap Quarter, Dong Hoa Ward, Di An City, Binh
+                Duong Province
               </Typography>
             </div>
           </div>
@@ -74,8 +68,8 @@ const Footer = () => {
             color="white"
             className="mb-4 text-center font-normal md:mb-0"
           >
-            &copy; {currentYear} Bản quyền thuộc Trường Đại học Bách Khoa -
-            ĐHQG-HCM
+            &copy; {currentYear} Copyright - Ho Chi Minh City University of
+            Technology - Vietnam National University, Ho Chi Minh City
           </Typography>
           <div className="flex gap-4 text-blue-gray-900 sm:justify-center">
             <Typography

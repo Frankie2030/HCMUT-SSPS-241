@@ -23,7 +23,7 @@ const statusColor = {
 
 const LogItem = ({ file, printer, log, handleClick, admin }) => {
   return (
-    <Card className="grid h-40 w-full grid-cols-10 gap-5 mb-5">
+    <Card className="mb-5 grid h-40 w-full grid-cols-10 gap-5">
       <div className="col-span-1 flex w-32 items-center">
         <img src={filetype[file.type]} alt="" className="w-full p-[10px]" />
       </div>
@@ -33,22 +33,22 @@ const LogItem = ({ file, printer, log, handleClick, admin }) => {
         </p>
         {admin ? (
           <p className="font-semibold">
-            Khách hàng: {log.userId.substring(0, 7)}
+            Customer: {log.userId.substring(0, 7)}
           </p>
         ) : null}
         <p className="flex h-1/2 items-center font-semibold">
-          Số trang: {file.pageNum}
+          Page Number: {file.pageNum}
         </p>
       </div>
       <div className="col-span-6">
         <div className="h-full grid-rows-2">
           <div className="flex h-1/2 items-center">
             <div className="w-1/2">
-              <p>Số bản in: {log.printingProperties.numberOfCopies}</p>
+              <p>Number of copies: {log.printingProperties.numberOfCopies}</p>
             </div>
             <div className="w-1/2">
               <p>
-                Máy:{" "}
+                Printer:{" "}
                 {`${printer.location.campus} - ${printer.location.building} - ${printer.location.room}`}
               </p>
             </div>
@@ -61,7 +61,8 @@ const LogItem = ({ file, printer, log, handleClick, admin }) => {
             >
               <div className="w-1/12">{statusIcon[log.status]}</div>
               <p className="font-full w-2/3 text-center font-semibold">
-                {log.status} - created at {moment(log.startTime).format("DD/MM/YYYY, h:mm:ss A")}
+                {log.status} - created at{" "}
+                {moment(log.startTime).format("DD/MM/YYYY, h:mm:ss A")}
               </p>
             </div>
             <Button
@@ -69,7 +70,7 @@ const LogItem = ({ file, printer, log, handleClick, admin }) => {
               color="blue"
               onClick={() => handleClick(log._id)}
             >
-              Chi tiết
+              Details
             </Button>
           </div>
         </div>
@@ -81,7 +82,7 @@ const LogItem = ({ file, printer, log, handleClick, admin }) => {
 const LogList = ({ files, printers, logs, filter, handleClick, admin }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [logsPerPage] = useState(3);
-  const [userIDFilter, setUserIDFilter] = useState('');
+  const [userIDFilter, setUserIDFilter] = useState("");
 
   const indexOfLastLog = currentPage * logsPerPage;
   const indexOfFirstLog = indexOfLastLog - logsPerPage;
@@ -105,15 +106,17 @@ const LogList = ({ files, printers, logs, filter, handleClick, admin }) => {
 
   return (
     <div className="flex flex-col gap-5">
-      {admin ? <div className="self-end mt-1">
-        <Input
-          type="text"
-          value={userIDFilter}
-          onChange={(e) => setUserIDFilter(e.target.value)}
-          label="userID"
-          className="self-end"
-        />
-      </div> : null}
+      {admin ? (
+        <div className="mt-1 self-end">
+          <Input
+            type="text"
+            value={userIDFilter}
+            onChange={(e) => setUserIDFilter(e.target.value)}
+            label="userID"
+            className="self-end"
+          />
+        </div>
+      ) : null}
       {currentLogs?.map((log) => {
         const file = files?.find((file) => file._id === log.fileId);
         const printer = printers?.find(

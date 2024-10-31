@@ -14,7 +14,7 @@ const PrinterInfo = ({
     <Card color="transparent" shadow={false}>
       <div className="mt-8 flex justify-between p-2">
         <Typography variant="h6" color="blue-gray">
-          Thông tin máy in
+          Printer Information
         </Typography>
         <IconButton variant="text">
           <ArrowUturnLeftIcon className=" w-5 " />
@@ -23,7 +23,7 @@ const PrinterInfo = ({
       <form className="mt-8 grid grid-cols-1 gap-x-10 gap-y-4 p-2 md:grid-cols-2">
         <div className="mb-1 flex flex-col gap-4">
           <Typography variant="h6" color="blue-gray" className="-mb-3">
-            Mã máy
+            ID
           </Typography>
           <Input
             disabled
@@ -36,7 +36,7 @@ const PrinterInfo = ({
         </div>
         <div className="mb-1 flex flex-col gap-4">
           <Typography variant="h6" color="blue-gray" className="-mb-3">
-            Hãng máy
+            Brand
           </Typography>
           <Input
             disabled
@@ -49,7 +49,7 @@ const PrinterInfo = ({
         </div>
         <div className="mb-1 flex flex-col gap-4">
           <Typography variant="h6" color="blue-gray" className="-mb-3">
-            Vị trí (Cơ sở - tòa - phòng)
+            Location (Campus - Building - Room)
           </Typography>
           <Input
             disabled
@@ -62,7 +62,7 @@ const PrinterInfo = ({
         </div>
         <div className="mb-1 flex flex-col gap-4">
           <Typography variant="h6" color="blue-gray" className="-mb-3">
-            Mô tả
+            Description
           </Typography>
           <Input
             disabled
@@ -75,7 +75,7 @@ const PrinterInfo = ({
         </div>
         <div className="mb-1 flex flex-col gap-4">
           <Typography variant="h6" color="blue-gray" className="-mb-3">
-            Số hiệu
+            Number
           </Typography>
           <Input
             disabled
@@ -88,7 +88,7 @@ const PrinterInfo = ({
         </div>
         <div className="mb-1 flex flex-col gap-4">
           <Typography variant="h6" color="blue-gray" className="-mb-3">
-            Trạng thái
+            Status
           </Typography>
           <Input
             disabled
@@ -101,7 +101,7 @@ const PrinterInfo = ({
         </div>
         <div className="mb-1 flex flex-col gap-4">
           <Typography variant="h6" color="blue-gray" className="-mb-2">
-            Hàng chờ
+            Queue
           </Typography>
           <Input
             disabled

@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@material-tailwind/react";
 
-const CookieDialog = ({img,text}) => {
+const CookieDialog = ({ img, text }) => {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(!open);
@@ -19,17 +19,16 @@ const CookieDialog = ({img,text}) => {
         onClick={handleOpen}
         variant="filled"
         size="sm"
-        className="text-md bg-[#b8c1ca] font-normal normal-case text-black m-2"
+        className="text-md m-2 bg-[#b8c1ca] font-normal normal-case text-black"
       >
         {img}
       </Button>
       <Dialog open={open} handler={handleOpen}>
         <DialogHeader>{text}</DialogHeader>
-        <DialogBody className="flex flex-col gap-3">
-        </DialogBody>
+        <DialogBody className="flex flex-col gap-3"></DialogBody>
         <DialogFooter>
           <Button variant="gradient" color="blue" onClick={handleOpen}>
-            <span>Xác nhận</span>
+            <span>Confirm</span>
           </Button>
         </DialogFooter>
       </Dialog>

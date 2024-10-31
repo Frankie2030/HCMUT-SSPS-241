@@ -13,7 +13,7 @@ import {
   DialogBody,
   DialogFooter,
   Select,
-  Option
+  Option,
 } from "@material-tailwind/react";
 
 const ButtonList = () => {
@@ -98,7 +98,7 @@ const ButtonList = () => {
         <img className="" src={plussign} alt={"add"} />
       </Button>
       <Dialog open={openAdd} handler={handleOpenAdd}>
-        <DialogHeader>Bạn hãy nhập định dạng muốn thêm</DialogHeader>
+        <DialogHeader>Enter the Type you want</DialogHeader>
         <DialogBody className="flex flex-col gap-3">
           <Select value={newButtonType} onChange={handleSelectChange}>
             <Option value="jpg">jpg</Option>

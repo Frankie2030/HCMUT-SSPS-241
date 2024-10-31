@@ -82,34 +82,38 @@ const Invoice = ({ quantity, combo, comboList }) => {
           </tr>
         </thead>
         <tbody>
-          {quantity > 0 ? <tr className="border-slate-200 border-b">
-            <td className="py-4 pl-4 pr-3 text-sm sm:pl-6 md:pl-0">
-              <div className="font-medium">Paper</div>
-            </td>
-            <td className="hidden px-3 py-4 text-right text-sm sm:table-cell">
-              {quantity}
-            </td>
-            <td className="hidden px-3 py-4 text-right text-sm sm:table-cell">
-              200
-            </td>
-            <td className="py-4 pl-3 pr-4 text-right text-sm sm:pr-6 md:pr-0">
-              {quantity * 200}
-            </td>
-          </tr> : null}
-          {combo !== null? <tr className="border-slate-200 border-b">
-            <td className="py-4 pl-4 pr-3 text-sm sm:pl-6 md:pl-0">
-              <div className="font-medium">{comboItem.description}</div>
-            </td>
-            <td className="hidden px-3 py-4 text-right text-sm sm:table-cell">
-              1
-            </td>
-            <td className="hidden px-3 py-4 text-right text-sm sm:table-cell">
-              {comboItem.price}
-            </td>
-            <td className="py-4 pl-3 pr-4 text-right text-sm sm:pr-6 md:pr-0">
-              {comboItem.price}
-            </td>
-          </tr> : null}
+          {quantity > 0 ? (
+            <tr className="border-slate-200 border-b">
+              <td className="py-4 pl-4 pr-3 text-sm sm:pl-6 md:pl-0">
+                <div className="font-medium">Paper</div>
+              </td>
+              <td className="hidden px-3 py-4 text-right text-sm sm:table-cell">
+                {quantity}
+              </td>
+              <td className="hidden px-3 py-4 text-right text-sm sm:table-cell">
+                200
+              </td>
+              <td className="py-4 pl-3 pr-4 text-right text-sm sm:pr-6 md:pr-0">
+                {quantity * 200}
+              </td>
+            </tr>
+          ) : null}
+          {combo !== null ? (
+            <tr className="border-slate-200 border-b">
+              <td className="py-4 pl-4 pr-3 text-sm sm:pl-6 md:pl-0">
+                <div className="font-medium">{comboItem.description}</div>
+              </td>
+              <td className="hidden px-3 py-4 text-right text-sm sm:table-cell">
+                1
+              </td>
+              <td className="hidden px-3 py-4 text-right text-sm sm:table-cell">
+                {comboItem.price}
+              </td>
+              <td className="py-4 pl-3 pr-4 text-right text-sm sm:pr-6 md:pr-0">
+                {comboItem.price}
+              </td>
+            </tr>
+          ) : null}
         </tbody>
         <tfoot>
           <tr>
@@ -173,7 +177,7 @@ const CardItem = ({ title, price, discount, onClick }) => {
       </div>
       <Chip
         color="blue"
-        value={`Giảm ${discount}`}
+        value={`Decrease ${discount}`}
         className="text-md col-span-2 row-span-2 my-3 justify-self-center"
       />
     </Button>
@@ -185,7 +189,7 @@ const BuyPaper = () => {
   const [quantity, setQuantity] = useState(0);
   const [combo, setCombo] = useState(null);
   const [updatePage] = useUpdatePageMutation();
-  const {_id: id} = useSelector((state) => state.auth.userData);
+  const { _id: id } = useSelector((state) => state.auth.userData);
 
   const handleSetCombo = (c) => {
     if (combo === c) {
@@ -193,13 +197,13 @@ const BuyPaper = () => {
     } else {
       setCombo(c);
     }
-  }
+  };
 
   const handleSubmit = async () => {
     const qty = combo !== null ? quantity + comboList[combo].pages : quantity;
-    await updatePage({quantity: qty, id});
-    window.location.reload()
-  }
+    await updatePage({ quantity: qty, id });
+    window.location.reload();
+  };
 
   const comboList = [
     {
@@ -219,7 +223,7 @@ const BuyPaper = () => {
       quantity: 1,
       pages: 500,
       price: 80000,
-    }
+    },
   ];
 
   return (
@@ -227,7 +231,7 @@ const BuyPaper = () => {
       <div className="flex flex-col gap-10 px-5">
         <div className="flex flex-col items-center gap-5">
           <Typography variant="h4">
-            Số giấy còn lại: {pageBalance} tờ A4
+            Remaining pages: {pageBalance} A4
           </Typography>
           <div className="flex flex-col gap-5 self-center">
             <figure>
@@ -237,17 +241,17 @@ const BuyPaper = () => {
                 variant="small"
                 className="mt-2 text-left font-normal"
               >
-                Đơn giá: 200đ/ tờ A4
+                Price: 200đ/ tờ A4
               </Typography>
             </figure>
             <div className="flex items-center gap-3">
-              <Typography variant="h5">Số lượng: </Typography>
+              <Typography variant="h5">Quantities: </Typography>
               <QuantitySelector quantity={quantity} setQuantity={setQuantity} />
             </div>
           </div>
         </div>
         <div className="flex flex-col">
-          <Typography variant="h5">Chọn hình thức thanh toán</Typography>
+          <Typography variant="h5">Payment Methods</Typography>
           <List className="gap-3">
             <CustomListItem
               htmlForId="pay-with-bkpay"
@@ -271,22 +275,22 @@ const BuyPaper = () => {
       <div className="flex flex-col gap-5 border-l-2 border-l-blue-gray-200 pb-10 ps-5">
         <Card className="flex flex-col items-center gap-3 bg-[#d9d9d9] py-5">
           <Typography variant="h5" color="black">
-            Gói khuyến mãi
+            Promotion Package
           </Typography>
           <CardItem
-            title="Gói 100 tờ A4"
+            title="100 A4 pages"
             price="19.000đ"
             discount="5%"
             onClick={() => handleSetCombo(0)}
           />
           <CardItem
-            title="Gói 200 tờ A4"
+            title="200 A4 pages"
             price="36.000đ"
             discount="10%"
             onClick={() => handleSetCombo(1)}
           />
           <CardItem
-            title="Gói 500 tờ A4"
+            title="500 A4 pages"
             price="80.000đ"
             discount="20%"
             onClick={() => handleSetCombo(2)}
@@ -294,12 +298,12 @@ const BuyPaper = () => {
         </Card>
         <Card className="flex flex-col items-center gap-3 bg-[#d9d9d9] py-5">
           <Typography variant="h5" color="black">
-            Đơn hàng
+            Order
           </Typography>
           <Invoice quantity={quantity} comboList={comboList} combo={combo} />
         </Card>
         <Button color="blue" className="self-center" onClick={handleSubmit}>
-          Mua Ngay
+          Buy Now
         </Button>
       </div>
     </div>

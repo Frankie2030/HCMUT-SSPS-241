@@ -22,7 +22,7 @@ const App = () => {
       ) : (
         <>
           <Header />
-          <main className="p-10 min-h-[500px] bg-white-fill">
+          <main className="min-h-screen bg-white-fill bg-cover bg-center p-10">
             <Outlet />
           </main>
           <Footer />

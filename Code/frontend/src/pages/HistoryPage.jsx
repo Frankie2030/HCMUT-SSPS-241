@@ -30,7 +30,7 @@ const LogDialog = ({ open, handleOpen, log }) => {
 
   return printingConfig ? (
     <Dialog open={open} handler={handleOpen}>
-      <DialogHeader>Chi tiết lịch sử in</DialogHeader>
+      <DialogHeader>Detail of Printing History</DialogHeader>
       <DialogBody className="flex flex-col gap-5">
         {Object.keys(printingConfig).map((key) => {
           return key !== "marginCustomTop" &&
@@ -40,19 +40,19 @@ const LogDialog = ({ open, handleOpen, log }) => {
             key !== "pagesToBePrintedCustom" ? (
             <div key={key} className="mx-3 grid grid-cols-2 items-center">
               {key === "doubleSided" ? (
-                <Typography variant="h6">Số mặt: </Typography>
+                <Typography variant="h6">Side Number: </Typography>
               ) : key === "pagesToBePrinted" ? (
-                <Typography variant="h6">Số trang in: </Typography>
+                <Typography variant="h6">Printed Pages: </Typography>
               ) : key === "pageLayout" ? (
                 <Typography variant="h6">Layout: </Typography>
               ) : key === "paperSize" ? (
-                <Typography variant="h6">Cỡ giấy: </Typography>
+                <Typography variant="h6">Page Size: </Typography>
               ) : key === "pagePerSide" ? (
-                <Typography variant="h6">Số trang một mặt giấy: </Typography>
+                <Typography variant="h6">Page per Side: </Typography>
               ) : key === "margin" ? (
-                <Typography variant="h6">Căn lề: </Typography>
+                <Typography variant="h6">Margin: </Typography>
               ) : key === "numberOfCopies" ? (
-                <Typography variant="h6">Số bản in: </Typography>
+                <Typography variant="h6">Copies: </Typography>
               ) : null}
               <Typography>
                 {key === "pagesToBePrinted" && printingConfig[key] === "custom"
@@ -67,7 +67,7 @@ const LogDialog = ({ open, handleOpen, log }) => {
           ) : null;
         })}
         <div className="mx-3 grid grid-cols-2">
-          <Typography variant="h6">Lịch hẹn: </Typography>
+          <Typography variant="h6">Take Date: </Typography>
           <Typography>
             {moment(schedule).format("DD/MM/YYYY, h:mm:ss A")}
           </Typography>
@@ -81,7 +81,7 @@ const LogDialog = ({ open, handleOpen, log }) => {
             window.location.reload();
           }}
         >
-          Hủy
+          Cancel
         </Button>
         <Button color="blue" onClick={handleOpen}>
           OK
@@ -168,7 +168,7 @@ const HistoryPage = () => {
     <div>Loading...</div>
   ) : (
     <>
-      <Typography variant="h4">LỊCH SỬ IN</Typography>
+      <Typography variant="h4">PRINTING HISTORY</Typography>
       <VerticalTabs item={tabItems} />
       <LogDialog
         open={open}

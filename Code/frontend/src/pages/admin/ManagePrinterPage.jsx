@@ -35,7 +35,7 @@ const ManagePrinterPage = () => {
 
   return (
     <>
-      <Typography variant="h4">QUẢN LÝ MÁY IN</Typography>
+      <Typography variant="h4">MANAGE PRINTER</Typography>
       <VerticalTabs item={tabItems} />
     </>
   );

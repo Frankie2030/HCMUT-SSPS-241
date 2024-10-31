@@ -34,9 +34,9 @@ const ScheduleDialog = ({
     <Dialog open={open} handler={handleOpen}>
       <DialogHeader>Schedule Print</DialogHeader>
       <DialogBody className="flex flex-col justify-center gap-10">
-        <Typography variant="h6">Số giấy hiện tại: {pageBalance}</Typography>
+        <Typography variant="h6">Page Balance: {pageBalance}</Typography>
         <Typography variant="h6">
-          Số giấy cần thiết: {calculatePage({ numPages, ...formValues })}
+          Pages Needed: {calculatePage({ numPages, ...formValues })}
         </Typography>
         <DateTimePicker onChange={setDate} value={date} className="h-20" />
       </DialogBody>
@@ -181,21 +181,21 @@ const PrintingConfig = ({ fileId, numPages }) => {
   return (
     <>
       <div className="flex flex-col space-y-5 rounded bg-[#70c1ff] p-5 text-black">
-        <p style={{ fontSize: "25px" }}>CẤU HÌNH FILE IN</p>
+        <p style={{ fontSize: "25px" }}>FILE CONFIGURATION</p>
         <hr className="border border-black" />
         <div className="grid grid-cols-1 items-center gap-2 md:grid-cols-2">
-          <div className="self-center">Số trang:</div>
+          <div className="self-center">Page Number:</div>
           <div className="grid-rows-2 space-y-2">
             <Select
               value={formValues.pagesToBePrinted}
               onChange={handleSelectChange("pagesToBePrinted")}
               id="ty-le"
-              label="Tùy chọn"
+              label=""
               className="bg-white"
               containerProps={{ className: "min-w-[50px]" }}
             >
-              <Option value="all">Toàn bộ</Option>
-              <Option value="custom">Tùy chỉnh</Option>
+              <Option value="all">All</Option>
+              <Option value="custom">Custom</Option>
             </Select>
             {formValues.pagesToBePrinted === "custom" && (
               <input
@@ -211,7 +211,7 @@ const PrintingConfig = ({ fileId, numPages }) => {
           </div>
           <div>Page Layout:</div>
           <Select
-            label="Tùy chọn"
+            label=""
             className="w-full bg-white"
             containerProps={{ className: "min-w-[50px]" }}
             value={formValues.pageLayout}
@@ -220,9 +220,9 @@ const PrintingConfig = ({ fileId, numPages }) => {
             <Option value="portrait">Portrait</Option>
             <Option value="landscape">Landscape</Option>
           </Select>
-          <div>Cỡ giấy:</div>
+          <div>Page Size:</div>
           <Select
-            label="Tùy chọn"
+            label=""
             className="bg-white"
             containerProps={{ className: "min-w-[50px]" }}
             value={formValues.paperSize}
@@ -246,27 +246,27 @@ const PrintingConfig = ({ fileId, numPages }) => {
           />
           <div className="self-center">Số mặt:</div>
           <Select
-            label="Tùy chọn"
+            label=""
             className="bg-white"
             containerProps={{ className: "min-w-[50px]" }}
             value={formValues.doubleSided}
             onChange={handleSelectChange("doubleSided")}
           >
-            <Option value="double">Hai mặt</Option>
-            <Option value="one">Một mặt</Option>\
+            <Option value="double">2 sides</Option>
+            <Option value="one">1 side</Option>\
           </Select>
-          <div className="self-center">Căn lề:</div>
+          <div className="self-center">Allignment:</div>
           <div className="grid-rows-2 space-y-2">
             <Select
               value={formValues.margin}
               onChange={handleSelectChange("margin")}
               id="ty-le"
-              label="Tùy chọn"
+              label=""
               className="bg-white"
               containerProps={{ className: "min-w-[50px]" }}
             >
-              <Option value="default">Măc định</Option>
-              <Option value="custom">Tùy chỉnh</Option>
+              <Option value="default">Default</Option>
+              <Option value="custom">Custom</Option>
             </Select>
             {formValues.margin === "custom" && (
               <div className="grid grid-cols-2 gap-1">
@@ -309,7 +309,7 @@ const PrintingConfig = ({ fileId, numPages }) => {
               </div>
             )}
           </div>
-          <div>Số bản in:</div>
+          <div>Number of Copies:</div>
           <div className="max-w-sm">
             <input
               type="number"
@@ -323,7 +323,7 @@ const PrintingConfig = ({ fileId, numPages }) => {
         </div>
         <div className="flex justify-end space-x-2">
           <Button size="sm" color="blue" onClick={handleOpen}>
-            Xác nhận
+            Confirm
           </Button>
         </div>
       </div>
