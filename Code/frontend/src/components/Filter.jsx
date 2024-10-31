@@ -7,7 +7,7 @@ import React from "react";
 import { List, ListItem, Card } from "@material-tailwind/react";
 import { ListItemPrefix, Avatar, Typography } from "@material-tailwind/react";
 
-const Filter = ({handleClick,inputMSSV,setMSSV}) => {
+const Filter = ({ handleClick, inputMSSV, setMSSV }) => {
   const Date = () => {
     return (
       <div
@@ -32,36 +32,32 @@ const Filter = ({handleClick,inputMSSV,setMSSV}) => {
     );
   };
   const MSSV = () => {
-    
     return (
-      <div
-        className="relative mb-3"
-      >
+      <div className="relative mb-3">
         <input
           type="text"
           className="peer-focus:text-primary dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
           placeholder="INPUT MSSV"
           data-te-datepicker-toggle-ref
           data-te-datepicker-toggle-button-ref
-          value={inputMSSV} onChange={(e) => setMSSV(e.target.value)}
+          value={inputMSSV}
+          onChange={(e) => setMSSV(e.target.value)}
         />
         <label
           htmlFor="floatingInput"
           className="text-neutral-500 peer-focus:text-primary dark:text-neutral-200 dark:peer-focus:text-primary pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none"
         >
-          INPUT MSSV
+          INPUT STUDENT ID
         </label>
       </div>
     );
   };
-  
-  
+
   function ListPrinter() {
-    
     return (
       <Card className="w-96">
         <List>
-          <ListItem  onClick={() => handleClick("CS2-1099")}>
+          <ListItem onClick={() => handleClick("CS2-1099")}>
             <ListItemPrefix>
               <Avatar
                 variant="circular"
@@ -116,12 +112,12 @@ const Filter = ({handleClick,inputMSSV,setMSSV}) => {
       </Card>
     );
   }
-  
+
   const PopPrinters = () => {
     return (
       <Popover placement="bottom-end" className="p-0">
         <PopoverHandler>
-          <button className="w-full">Danh sách máy in</button>
+          <button className="w-full">List of Printers</button>
         </PopoverHandler>
         <PopoverContent className="z-20">
           <ListPrinter />
@@ -129,26 +125,25 @@ const Filter = ({handleClick,inputMSSV,setMSSV}) => {
       </Popover>
     );
   };
-  
-  const PopMSSV =() =>
-  {
+
+  const PopMSSV = () => {
     return (
       <Popover placement="bottom-end" className="p-0">
         <PopoverHandler>
-          <button className="w-full">MSSV</button>
+          <button className="w-full">Student ID</button>
         </PopoverHandler>
         <PopoverContent className="z-20">
-          <MSSV/>
+          <MSSV />
         </PopoverContent>
       </Popover>
     );
-  }
-  
+  };
+
   const PopTime = () => {
     return (
       <Popover placement="bottom-end" className="p-0">
         <PopoverHandler>
-          <button className="w-full">Nhập khoảng thời gian</button>
+          <button className="w-full">Enter Range of Time</button>
         </PopoverHandler>
         <PopoverContent className="z-20">
           <Date />
@@ -156,9 +151,9 @@ const Filter = ({handleClick,inputMSSV,setMSSV}) => {
       </Popover>
     );
   };
-  
+
   function FilterIcon() {
-    return (  
+    return (
       <svg
         className="text-white-600 h-6 w-6 p-0"
         xmlns="http://www.w3.org/2000/svg"
@@ -177,11 +172,11 @@ const Filter = ({handleClick,inputMSSV,setMSSV}) => {
       </svg>
     );
   }
-  
+
   function ListSPSO() {
     const [selected, setSelected] = React.useState(1);
     const setSelectedItem = (value) => setSelected(value);
-  
+
     return (
       <Card className="w-46 z-20">
         <List>
@@ -189,7 +184,7 @@ const Filter = ({handleClick,inputMSSV,setMSSV}) => {
             selected={selected === 1}
             onClick={() => setSelectedItem(1)}
           >
-           < PopMSSV/>
+            <PopMSSV />
           </ListItem>
           <ListItem
             selected={selected === 1}
@@ -200,18 +195,21 @@ const Filter = ({handleClick,inputMSSV,setMSSV}) => {
           >
             <PopPrinters />
           </ListItem>
-          <ListItem selected={selected === 3} onClick={() => setSelectedItem(3)}>
+          <ListItem
+            selected={selected === 3}
+            onClick={() => setSelectedItem(3)}
+          >
             <PopTime />
           </ListItem>
         </List>
       </Card>
     );
   }
-  
+
   function ListUser() {
     const [selected, setSelected] = React.useState(1);
     const setSelectedItem = (value) => setSelected(value);
-  
+
     return (
       <Card className="w-46 z-20">
         <List>
@@ -224,14 +222,17 @@ const Filter = ({handleClick,inputMSSV,setMSSV}) => {
           >
             <PopPrinters />
           </ListItem>
-          <ListItem selected={selected === 2} onClick={() => setSelectedItem(2)}>
+          <ListItem
+            selected={selected === 2}
+            onClick={() => setSelectedItem(2)}
+          >
             <PopTime />
           </ListItem>
         </List>
       </Card>
     );
   }
-  
+
   function ListWithSelectedItem({ typeUser }) {
     if (typeUser == "User") {
       return <ListUser />;
@@ -241,18 +242,17 @@ const Filter = ({handleClick,inputMSSV,setMSSV}) => {
   }
   return (
     <>
-    
-    <Popover placement="bottom-end" className="p-0">
-      <PopoverHandler>
-        <button>
-          <FilterIcon />
-        </button>
-      </PopoverHandler>
-      <PopoverContent className="z-10">
-        <span>Lựa chọn kiểu filter</span>
-        <ListWithSelectedItem typeUser="spso" />
-      </PopoverContent>
-    </Popover>
+      <Popover placement="bottom-end" className="p-0">
+        <PopoverHandler>
+          <button>
+            <FilterIcon />
+          </button>
+        </PopoverHandler>
+        <PopoverContent className="z-10">
+          <span>Lựa chọn kiểu filter</span>
+          <ListWithSelectedItem typeUser="spso" />
+        </PopoverContent>
+      </Popover>
     </>
   );
 };

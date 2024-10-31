@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import { Typography, Button, Input } from "@material-tailwind/react";
-import {useGetDefaultsQuery, useUpdateDefaultsMutation} from "../slices/configApiSlice";
+import {
+  useGetDefaultsQuery,
+  useUpdateDefaultsMutation,
+} from "../slices/configApiSlice";
 
 const FormPaper = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [updateDefaults] = useUpdateDefaultsMutation();
-  const {data: defaults} = useGetDefaultsQuery();
+  const { data: defaults } = useGetDefaultsQuery();
 
   const handleDateChange = (event) => {
     const selectedDate = event.target.value;
@@ -20,18 +23,20 @@ const FormPaper = () => {
   };
 
   useEffect(() => {
-    if (defaults?.defaultPages)
-    setNumericValue(defaults?.defaultPages);
+    if (defaults?.defaultPages) setNumericValue(defaults?.defaultPages);
     if (defaults?.distributionDates) {
-      const date = new Date(defaults?.distributionDates)
+      const date = new Date(defaults?.distributionDates);
       setSelectedDate(date.toISOString().slice(0, 10));
     }
-  }, [defaults])
+  }, [defaults]);
 
   const handleSubmit = () => {
-    updateDefaults({defaultPages: numericValue, distributionDates: new Date(selectedDate)});
+    updateDefaults({
+      defaultPages: numericValue,
+      distributionDates: new Date(selectedDate),
+    });
     window.location.reload();
-  }
+  };
 
   return (
     <div>
@@ -43,7 +48,7 @@ const FormPaper = () => {
             className="mb-2 font-medium"
             style={{ fontWeight: "bold" }}
           >
-            Chọn ngày tặng giấy
+            Choose date for giving pages
           </Typography>
           <Input
             placeholder="Select a date"
@@ -64,7 +69,7 @@ const FormPaper = () => {
             className="mb-2 font-medium"
             style={{ fontWeight: "bold" }}
           >
-            Số giấy miễn phí được cấp
+            Number of free given pages
           </Typography>
           <Input
             maxLength={3}
@@ -86,7 +91,7 @@ const FormPaper = () => {
             size="md"
             onClick={handleSubmit}
           >
-            Xác nhận
+            Confirm
           </Button>
         </div>
       </div>

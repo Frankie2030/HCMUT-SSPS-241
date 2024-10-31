@@ -12,6 +12,7 @@ import ManagePrintingPage from "./pages/admin/ManagePrintingPage";
 import FilePreviewPage from "./pages/FilePreviewPage.jsx";
 import AdminHistoryPage from "./pages/admin/HistoryPage";
 import SSOPage from "./pages/SSOPage";
+import NotFoundPage from "./pages/NotFoundPage"; // Import the 404 page component
 import "./index.css";
 import { Provider } from "react-redux";
 import store from "./store";
@@ -43,14 +44,13 @@ const router = createBrowserRouter(
             path="/admin/printing-manage"
             element={<ManagePrintingPage />}
           />
-          <Route
-            path="/admin/history"
-            element={<AdminHistoryPage />}
-          />
+          <Route path="/admin/history" element={<AdminHistoryPage />} />
         </Route>
       </Route>
       <Route path="/login" element={<LoginPage />} />
       <Route path="/sso" element={<SSOPage />} />
+      {/* Catch-all route for 404 page */}
+      <Route path="*" element={<NotFoundPage />} />
     </>,
   ),
 );

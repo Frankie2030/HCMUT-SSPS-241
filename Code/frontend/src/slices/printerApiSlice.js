@@ -11,24 +11,37 @@ export const printerApiSlice = apiSlice.injectEndpoints({
     addPrinter: builder.mutation({
       query: (body) => ({
         url: `${PRINTER_URL}/`,
-        method: 'POST',
-        body: body
+        method: "POST",
+        body: body,
       }),
     }),
     setStatus: builder.mutation({
-      query: ({id, status}) => ({
+      query: ({ id, status }) => ({
         url: `${PRINTER_URL}/status`,
-        method: 'POST',
-        body: {id, status}
+        method: "POST",
+        body: { id, status },
       }),
     }),
     deletePrinter: builder.mutation({
       query: (id) => ({
         url: `${PRINTER_URL}/${id}`,
-        method: 'DELETE',
+        method: "DELETE",
+      }),
+    }),
+    updatePrinter: builder.mutation({
+      query: ({ id, ...body }) => ({
+        url: `${PRINTER_URL}/${id}`,
+        method: "PUT",
+        body,
       }),
     }),
   }),
 });
 
-export const { useGetPrinterQuery, useAddPrinterMutation, useSetStatusMutation, useDeletePrinterMutation } = printerApiSlice;
+export const {
+  useGetPrinterQuery,
+  useAddPrinterMutation,
+  useSetStatusMutation,
+  useDeletePrinterMutation,
+  useUpdatePrinterMutation, // Export the new mutation hook
+} = printerApiSlice;

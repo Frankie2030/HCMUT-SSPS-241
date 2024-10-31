@@ -35,14 +35,14 @@ const FileItem = ({ file }) => {
           </p>
           {file.pageNum === 0 ? null : (
             <p className="flex h-1/2 items-center font-semibold">
-              Số trang: {file.pageNum}
+              Page Number: {file.pageNum}
             </p>
           )}
         </div>
       </div>
       <div className="col-span-5 flex flex-col justify-between">
         <div className="w-full">
-          <p>Máy in: {file.printerId}</p>
+          <p>Printer ID: {file.printerId}</p>
         </div>
         <div className="flex h-1/2 items-end">
           <div
@@ -63,7 +63,7 @@ const FileItem = ({ file }) => {
             size="lg"
             className="w-full rounded-full bg-blue-500 px-4 py-3 text-white hover:bg-blue-700"
           >
-            In
+            Print
           </Button>
         </Link>
       </div>
@@ -77,8 +77,7 @@ const FileList = ({ files }) => {
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = files
-    ?.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = files?.slice(indexOfFirstItem, indexOfLastItem);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 

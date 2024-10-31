@@ -22,28 +22,28 @@ const ManagePrintingPage = () => {
     createTabItem(
       "Cài đặt loại file in",
       "1",
-      <MapIcon className="w-5 h-5" />,
-      <ButtonList />
+      <MapIcon className="h-5 w-5" />,
+      <ButtonList />,
     ),
     createTabItem(
       "Cài đặt tặng giấy",
       "2",
-      <Cog6ToothIcon className="w-5 h-5" />,
-      <FormPaper />
+      <Cog6ToothIcon className="h-5 w-5" />,
+      <FormPaper />,
     ),
     createTabItem(
       "Xuất báo cáo",
       "3",
-      <Cog8ToothIcon className="w-5 h-5" />,
-      <Report />
+      <Cog8ToothIcon className="h-5 w-5" />,
+      <Report />,
     ),
   ];
   return (
-    <div >
-        <div>
-          <Typography variant="h3" className="font-bold ">
-            QUẢN LÝ IN ẤN
-          </Typography>
+    <div>
+      <div>
+        <Typography variant="h3" className="font-bold ">
+          MANAGE PRINTING
+        </Typography>
       </div>
       <VerticalTabs item={tabItems} />
     </div>

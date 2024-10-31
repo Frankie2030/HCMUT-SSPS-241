@@ -3,7 +3,7 @@ import {
   CardBody,
   CardHeader,
   Typography,
-  Button
+  Button,
 } from "@material-tailwind/react";
 import Chart from "react-apexcharts";
 import { UserIcon, CurrencyDollarIcon } from "@heroicons/react/24/outline";
@@ -203,10 +203,10 @@ class PrintableComponent extends React.PureComponent {
             </div>
             <div>
               <Typography variant="h6" color="blue-gray">
-                Doanh thu
+                Revenue
               </Typography>
               <Typography variant="paragraph" color="blue-gray">
-                Số giấy bán ra
+                Number of Sold Pages
               </Typography>
             </div>
           </CardHeader>
@@ -226,10 +226,10 @@ class PrintableComponent extends React.PureComponent {
             </div>
             <div>
               <Typography variant="h6" color="blue-gray">
-                Người dùng mới
+                New User
               </Typography>
               <Typography variant="paragraph" color="blue-gray">
-                Số người dùng sử dụng dịch vụ lần đầu tiên trong tháng
+                Number of first-use User in this month
               </Typography>
             </div>
           </CardHeader>
@@ -247,7 +247,7 @@ class Report extends React.PureComponent {
     return (
       <div>
         <ReactToPrint
-          trigger={() => <Button color="blue">Xuất</Button>}
+          trigger={() => <Button color="blue">Export</Button>}
           content={() => this.componentRef}
         />
         <PrintableComponent ref={(el) => (this.componentRef = el)} />

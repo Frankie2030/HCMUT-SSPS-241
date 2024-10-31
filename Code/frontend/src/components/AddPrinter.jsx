@@ -18,7 +18,7 @@ const AddPrinter = () => {
       room: "",
     },
     brand: "",
-    id: "",
+    number: "", // Updated from "id" to "number" to match schema
     description: "",
   });
 
@@ -48,14 +48,19 @@ const AddPrinter = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    await addPrinter(formValues);
-    window.location.reload();
+    try {
+      console.log("Adding printer with values:", formValues); // Debugging line
+      await addPrinter(formValues).unwrap();
+      window.location.reload();
+    } catch (error) {
+      console.error("Failed to add printer:", error);
+    }
   };
 
   return (
     <Card color="transparent" shadow={false}>
       <Typography variant="h6" color="blue-gray">
-        Thông tin máy in
+        Printer Configuration
       </Typography>
       <form
         onSubmit={handleSubmit}
@@ -63,11 +68,11 @@ const AddPrinter = () => {
       >
         <div className="mb-1 flex flex-col gap-4">
           <Typography variant="h6" color="blue-gray" className="-mb-3">
-            Vị trí (Cơ sở - tòa - phòng)
+            Location (Campus - Building - Room)
           </Typography>
           <Input
-            placeholder="Nhập vị trí của máy in"
-            className=" border-none bg-gray-100 placeholder:text-gray-400"
+            placeholder="Enter the Location (e.g., Campus-Building-Room)"
+            className="border border-gray-300 bg-gray-50 placeholder:text-gray-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
             labelProps={{
               className: "before:content-none after:content-none",
             }}
@@ -77,9 +82,12 @@ const AddPrinter = () => {
         </div>
         <div className="mb-1 flex flex-col gap-4">
           <Typography variant="h6" color="blue-gray" className="-mb-3">
-            Hãng máy
+            Brand
           </Typography>
-          <Select onChange={handleSelectChange("brand")}>
+          <Select
+            onChange={handleSelectChange("brand")}
+            className="focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+          >
             <Option value="Canon">Canon</Option>
             <Option value="HP">HP</Option>
             <Option value="Epson">Epson</Option>
@@ -91,40 +99,40 @@ const AddPrinter = () => {
         </div>
         <div className="mb-1 flex flex-col gap-4">
           <Typography variant="h6" color="blue-gray" className="-mb-3">
-            Số hiệu
+            Printer ID
           </Typography>
           <Input
-            placeholder="Nhập ID"
-            className=" border-none bg-gray-100 placeholder:text-gray-400"
+            placeholder="Enter Printer ID (e.g., M2020W-7521)"
+            className="border border-gray-300 bg-gray-50 placeholder:text-gray-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
             labelProps={{
               className: "before:content-none after:content-none",
             }}
-            name="number"
+            name="number" // Updated to "number" to match schema
             onChange={handleChange}
           />
         </div>
         <div className="mb-1 flex flex-col gap-4">
           <Typography variant="h6" color="blue-gray" className="-mb-3">
-            Mô tả
+            Description
           </Typography>
           <Textarea
             name="description"
-            placeholder="Nhập mô tả"
-            className=" border-none bg-gray-100 placeholder:text-gray-400"
+            placeholder="Enter a description"
+            className="border border-gray-300 bg-gray-50 placeholder:text-gray-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
             labelProps={{
               className: "before:content-none after:content-none",
             }}
             onChange={handleChange}
           />
         </div>
-        <div className=" col-start-2 mb-1 grid grid-cols-2 justify-items-end gap-4 pt-9 ">
+        <div className="col-start-2 mb-1 grid grid-cols-2 justify-items-end gap-4 pt-9">
           <Button
             size="md"
-            className=" col-start-2 self-center rounded-full "
+            className="col-start-2 self-center rounded-full"
             color="blue"
             type="submit"
           >
-            Xác nhận
+            Confirm
           </Button>
         </div>
       </form>

@@ -13,9 +13,11 @@ const ProfilePage = () => {
 
   useEffect(() => {
     console.log(user);
-  })
+  });
 
-  return isLoading ? <div>Loading...</div> : (
+  return isLoading ? (
+    <div>Loading...</div>
+  ) : (
     <div className="grid grid-flow-col grid-rows-6 gap-10">
       <Avatar src={user.user.avatar} className="row-span-6 m-10 h-60 w-60" />
       <div className="col-span-9" />
@@ -26,7 +28,7 @@ const ProfilePage = () => {
             className="flex-none font-bold text-red-400/100"
             style={parentStyle}
           >
-            Thông tin tài khoản
+            Account Information
           </Typography>
         </Card>
       </div>
@@ -36,7 +38,7 @@ const ProfilePage = () => {
           className="flex-none font-bold text-blue-600/90 underline"
           style={parentStyle}
         >
-          Tên người dùng
+          User Name
         </Typography>
         <Typography
           variant="h4"
@@ -52,7 +54,7 @@ const ProfilePage = () => {
           className="flex-none font-bold text-blue-600/90 underline"
           style={parentStyle}
         >
-          Vai trò
+          Role
         </Typography>
         <Typography
           variant="h4"
@@ -68,7 +70,7 @@ const ProfilePage = () => {
           className="flex-none font-bold text-blue-600/90 underline"
           style={parentStyle}
         >
-          Địa chỉ Email
+          Email
         </Typography>
         <Typography
           variant="h4"
@@ -84,7 +86,7 @@ const ProfilePage = () => {
           className="flex-none font-bold text-blue-600/90 underline"
           style={parentStyle}
         >
-          Số dư
+          Page Balance
         </Typography>
         <Typography
           variant="h4"
