@@ -23,9 +23,15 @@ const CookieDialog = () => {
       >
         Cookies notice
       </Button>
-      <Dialog open={open} handler={handleOpen}>
-        <DialogHeader>Cookies must be enabled in your browser.</DialogHeader>
-        <DialogBody className="flex flex-col gap-3">
+      <Dialog
+        open={open}
+        handler={handleOpen}
+        className="mx-auto w-full max-w-md" // Centered and max-width for better responsiveness
+      >
+        <DialogHeader className="text-lg sm:text-xl">
+          Cookies must be enabled in your browser.
+        </DialogHeader>
+        <DialogBody className="flex flex-col gap-3 text-sm sm:text-base">
           <Typography>Two cookies are used on this site:</Typography>
           <Typography>
             The essential one is the session cookie, usually called
@@ -43,8 +49,13 @@ const CookieDialog = () => {
             log in.
           </Typography>
         </DialogBody>
-        <DialogFooter>
-          <Button variant="gradient" color="blue" onClick={handleOpen}>
+        <DialogFooter className="flex justify-center sm:justify-end">
+          <Button
+            variant="gradient"
+            color="blue"
+            onClick={handleOpen}
+            className="w-full sm:w-auto" // Full-width button on smaller screens
+          >
             <span>OK</span>
           </Button>
         </DialogFooter>

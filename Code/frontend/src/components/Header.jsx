@@ -28,8 +28,11 @@ const Header = () => {
       "resize",
       () => window.innerWidth >= 960 && setOpenNav(false),
     );
-    console.log(role);
   }, [role]);
+
+  const handleNavItemClick = () => {
+    setOpenNav(false); // Close the menu when a nav item is clicked
+  };
 
   const generateNavItem = (icon, to, text) => (
     <Typography
@@ -39,7 +42,7 @@ const Header = () => {
       className="flex items-center gap-x-2 p-1 font-bold"
     >
       {icon && cloneElement(icon, { className: "w-6" })}
-      <Link to={to} className="flex items-center">
+      <Link to={to} className="flex items-center" onClick={handleNavItemClick}>
         {text}
       </Link>
     </Typography>
@@ -48,21 +51,21 @@ const Header = () => {
   const navList = (
     <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-14">
       {role ? generateNavItem(<HomeIcon />, "/", "HOMEPAGE") : null}
-
       {role === "customer"
         ? generateNavItem(<ClockIcon />, "/history", "PRINTING HISTORY")
         : role === "SPSO"
           ? generateNavItem(<PrinterIcon />, "/admin/printer-manage", "PRINTER")
           : generateNavItem(<UserIcon />, "/login", "LOGIN")}
-
       {role === "SPSO"
         ? generateNavItem(<CogIcon />, "/admin/printing-manage", "PRINTING")
         : role === "customer"
           ? generateNavItem(<PrinterIcon />, "/printing", "PRINT NOW")
           : null}
-
       {role === "SPSO"
         ? generateNavItem(<ClockIcon />, "/admin/history", "PRINTING HISTORY")
+        : null}
+      {role === "SPSO"
+        ? generateNavItem(<UserIcon />, "/admin/user-list", "USER LIST")
         : null}
     </ul>
   );
@@ -73,19 +76,31 @@ const Header = () => {
       fullWidth={true}
     >
       <div className="flex w-full items-center justify-between text-blue-gray-900">
-        <Link to="/" className="grid grid-cols-5 items-center gap-3">
-          <img className="col-span-1 w-16" src={logo} alt="logo" />
-          <div className="col-span-4 flex flex-col">
-            <Typography variant="small" color="white">
+        <Link
+          to="/"
+          className="flex items-center gap-3"
+          onClick={handleNavItemClick}
+        >
+          <img className="w-12 md:w-16" src={logo} alt="logo" />
+          <div className="hidden flex-col md:flex">
+            <Typography
+              variant="small"
+              color="white"
+              className="text-xs md:text-sm"
+            >
               HO CHI MINH CITY UNIVERSITY OF TECHNOLOGY (HCMUT)
             </Typography>
-            <Typography variant="small" color="white" className="font-bold">
+            <Typography
+              variant="small"
+              color="white"
+              className="text-sm font-bold md:text-base"
+            >
               STUDENT SMART PRINTING SERVICES
             </Typography>
           </div>
         </Link>
-        <div className="flex items-center gap-5">
-          <div className="me-5 hidden lg:block">{navList}</div>
+        <div className="hidden items-center gap-5 lg:flex">
+          {navList}
           {role ? <ProfileMenu /> : null}
         </div>
         <IconButton
@@ -101,8 +116,11 @@ const Header = () => {
           )}
         </IconButton>
       </div>
-      <Collapse open={openNav}>
-        <div className="container mx-auto">{navList}</div>
+      <Collapse open={openNav} className="lg:hidden">
+        <div className="container mx-auto flex flex-col gap-4">
+          <div className="mb-4 flex justify-end">{role && <ProfileMenu />}</div>
+          {navList}
+        </div>
       </Collapse>
     </Navbar>
   );

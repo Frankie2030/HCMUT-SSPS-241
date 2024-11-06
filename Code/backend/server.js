@@ -23,6 +23,7 @@ import printerRoutes from "./routes/printerRoutes.js";
 import fileRoutes from "./routes/fileRoutes.js";
 import logRoutes from "./routes/logRoutes.js";
 import configRoutes from "./routes/configRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
 
 await connectDB();
 
@@ -69,6 +70,7 @@ app.use(
 );
 
 app.use("/auth", authRoutes);
+app.use("/auth/users", userRoutes); // Assuming "auth/users" as base path
 app.use("/printer", printerRoutes);
 app.use("/file", fileRoutes);
 app.use("/log", logRoutes);

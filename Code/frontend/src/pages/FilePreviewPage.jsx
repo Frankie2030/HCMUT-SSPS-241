@@ -5,7 +5,7 @@ import "react-pdf/dist/Page/AnnotationLayer.css";
 import { useResizeObserver } from "@wojtekmaj/react-hooks";
 import { Button, Typography } from "@material-tailwind/react";
 import PrintingConfig from "../components/PrintingConfig";
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   "pdfjs-dist/build/pdf.worker.min.js",
@@ -93,7 +93,7 @@ const FilePreviewPage = () => {
         </div>
       </div>
       <div className="col-span-2 justify-self-center">
-        <PrintingConfig fileId={id} numPages={numPages}/>
+        <PrintingConfig fileId={id} numPages={numPages} />
       </div>
     </div>
   );

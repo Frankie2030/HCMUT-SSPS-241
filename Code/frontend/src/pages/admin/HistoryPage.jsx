@@ -99,7 +99,7 @@ const HistoryPage = () => {
 
   const tabItems = [
     createTabItem(
-      "Tất cả",
+      "All",
       "1",
       <FolderIcon className="w-10" />,
       <LogList
@@ -112,7 +112,7 @@ const HistoryPage = () => {
       />,
     ),
     createTabItem(
-      "Hẹn lịch",
+      "Arranged",
       "2",
       <CalendarIcon className="w-10" />,
       <div>
@@ -127,7 +127,7 @@ const HistoryPage = () => {
       </div>,
     ),
     createTabItem(
-      "Đã hủy",
+      "Canceled",
       "3",
       <XCircleIcon className="w-10" />,
       <LogList
@@ -140,7 +140,7 @@ const HistoryPage = () => {
       />,
     ),
     createTabItem(
-      "Đã in",
+      "Printed",
       "4",
       <CheckCircleIcon className="w-10" />,
       <LogList

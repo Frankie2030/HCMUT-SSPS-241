@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.custom-datetime-picker .react-datetime-picker__inputGroup__input {
+    padding: 0;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+}
+
+
+/* 
+react-datetime-picker__inputGroup__input react-datetime-picker__inputGroup__amPm
+*/
+
+/* .custom-datetime-picker .react-datetime-picker__inputGroup .react-datetime-picker__inputGroup__amPm {
+    display: none; 
+} */

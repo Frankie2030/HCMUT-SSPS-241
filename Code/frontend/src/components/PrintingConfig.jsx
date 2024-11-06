@@ -38,7 +38,12 @@ const ScheduleDialog = ({
         <Typography variant="h6">
           Pages Needed: {calculatePage({ numPages, ...formValues })}
         </Typography>
-        <DateTimePicker onChange={setDate} value={date} className="h-20" />
+        <DateTimePicker
+          onChange={setDate}
+          value={date}
+          format="y/MM/dd HH:mm" // 24-hour format
+          className="custom-datetime-picker w-full rounded-lg border border-gray-300 p-2"
+        />
       </DialogBody>
       <DialogFooter>
         <Button
@@ -190,7 +195,7 @@ const PrintingConfig = ({ fileId, numPages }) => {
               value={formValues.pagesToBePrinted}
               onChange={handleSelectChange("pagesToBePrinted")}
               id="ty-le"
-              label=""
+              label={<span style={{ color: "#1a202c" }}>Select Pages</span>}
               className="bg-white"
               containerProps={{ className: "min-w-[50px]" }}
             >
@@ -211,7 +216,7 @@ const PrintingConfig = ({ fileId, numPages }) => {
           </div>
           <div>Page Layout:</div>
           <Select
-            label=""
+            label={<span style={{ color: "#1a202c" }}>Page layout</span>}
             className="w-full bg-white"
             containerProps={{ className: "min-w-[50px]" }}
             value={formValues.pageLayout}
@@ -222,7 +227,7 @@ const PrintingConfig = ({ fileId, numPages }) => {
           </Select>
           <div>Page Size:</div>
           <Select
-            label=""
+            label={<span style={{ color: "#1a202c" }}>Size of the Page</span>}
             className="bg-white"
             containerProps={{ className: "min-w-[50px]" }}
             value={formValues.paperSize}
@@ -235,7 +240,7 @@ const PrintingConfig = ({ fileId, numPages }) => {
             <Option value="letter">Letter</Option>
             <Option value="noscaling">No scaling</Option>
           </Select>
-          <label htmlFor="numberpage-input">Số tờ mỗi mặt:</label>
+          <label htmlFor="numberpage-input">Num Page Per Side:</label>
           <input
             type="number"
             id="numberpage-input"
@@ -244,9 +249,11 @@ const PrintingConfig = ({ fileId, numPages }) => {
             value={formValues.pagePerSide}
             onChange={handleInputChange("pagePerSide")}
           />
-          <div className="self-center">Số mặt:</div>
+          <div className="self-center">Num Side:</div>
           <Select
-            label=""
+            label={
+              <span style={{ color: "#1a202c" }}>Number Side per Paper</span>
+            }
             className="bg-white"
             containerProps={{ className: "min-w-[50px]" }}
             value={formValues.doubleSided}
@@ -261,7 +268,7 @@ const PrintingConfig = ({ fileId, numPages }) => {
               value={formValues.margin}
               onChange={handleSelectChange("margin")}
               id="ty-le"
-              label=""
+              label={<span style={{ color: "#1a202c" }}>Page Allignment</span>}
               className="bg-white"
               containerProps={{ className: "min-w-[50px]" }}
             >

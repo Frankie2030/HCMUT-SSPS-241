@@ -10,9 +10,9 @@ import Pagination from "./Pagination";
 import { useEffect, useState } from "react";
 
 const statusIcon = {
-  queued: <ClockIcon className="w-8" />,
-  completed: <CheckBadgeIcon className="w-8" />,
-  cancelled: <ExclamationTriangleIcon className="w-8" />,
+  queued: <ClockIcon className="w-6 sm:w-8" />,
+  completed: <CheckBadgeIcon className="w-6 sm:w-8" />,
+  cancelled: <ExclamationTriangleIcon className="w-6 sm:w-8" />,
 };
 
 const statusColor = {
@@ -23,57 +23,57 @@ const statusColor = {
 
 const LogItem = ({ file, printer, log, handleClick, admin }) => {
   return (
-    <Card className="mb-5 grid h-40 w-full grid-cols-10 gap-5">
-      <div className="col-span-1 flex w-32 items-center">
-        <img src={filetype[file.type]} alt="" className="w-full p-[10px]" />
+    <Card className="mb-5 flex w-full flex-col gap-4 p-4 sm:flex-row sm:items-center">
+      {/* File Type Icon */}
+      <div className="flex w-full items-center justify-center sm:h-16 sm:w-16">
+        <img
+          src={filetype[file.type]}
+          alt=""
+          className="h-12 w-12 sm:h-full sm:w-full"
+        />
       </div>
-      <div className="col-span-3 h-full grid-rows-3 ps-10">
-        <p className="flex h-1/2 items-center truncate font-semibold">
-          {file.name}
-        </p>
-        {admin ? (
-          <p className="font-semibold">
+
+      {/* File and Customer Info */}
+      <div className="flex w-full flex-col gap-2 sm:w-1/3">
+        <p className="truncate font-semibold">{file.name}</p>
+        {admin && (
+          <p className="text-sm text-gray-700">
             Customer: {log.userId.substring(0, 7)}
           </p>
-        ) : null}
-        <p className="flex h-1/2 items-center font-semibold">
-          Page Number: {file.pageNum}
-        </p>
+        )}
+        <p className="text-sm font-semibold">Page Number: {file.pageNum}</p>
       </div>
-      <div className="col-span-6">
-        <div className="h-full grid-rows-2">
-          <div className="flex h-1/2 items-center">
-            <div className="w-1/2">
-              <p>Number of copies: {log.printingProperties.numberOfCopies}</p>
-            </div>
-            <div className="w-1/2">
-              <p>
-                Printer:{" "}
-                {`${printer.location.campus} - ${printer.location.building} - ${printer.location.room}`}
-              </p>
-            </div>
-          </div>
-          <div className="grid h-1/2 grid-cols-4 items-center gap-5">
-            <div
-              className={`rounded-full ${
-                statusColor[log.status]
-              } col-span-3 flex h-[80%] w-full items-center justify-center`}
-            >
-              <div className="w-1/12">{statusIcon[log.status]}</div>
-              <p className="font-full w-2/3 text-center font-semibold">
-                {log.status} - created at{" "}
-                {moment(log.startTime).format("DD/MM/YYYY, h:mm:ss A")}
-              </p>
-            </div>
-            <Button
-              className="col-span-1 rounded-full"
-              color="blue"
-              onClick={() => handleClick(log._id)}
-            >
-              Details
-            </Button>
-          </div>
+
+      {/* Printer Info and Status */}
+      <div className="flex w-full flex-col gap-2 sm:w-2/3">
+        <div className="flex flex-wrap justify-between text-sm">
+          <p>Copies: {log.printingProperties.numberOfCopies}</p>
+          <p>
+            Printer:{" "}
+            {`${printer.location.campus} - ${printer.location.building} - ${printer.location.room}`}
+          </p>
         </div>
+        <div
+          className={`flex items-center gap-2 ${statusColor[log.status]} w-full justify-center rounded-full px-4 py-2 sm:justify-start`}
+        >
+          <div>{statusIcon[log.status]}</div>
+          <p className="text-center font-semibold text-white">
+            {log.status} -{" "}
+            {moment(log.startTime).format("DD/MM/YYYY, h:mm:ss A")}
+          </p>
+        </div>
+      </div>
+
+      {/* Details Button aligned to the right */}
+      <div className="self-end sm:ml-auto sm:self-center">
+        <Button
+          color="blue"
+          size="sm"
+          className="w-full rounded-full sm:w-auto"
+          onClick={() => handleClick(log._id)}
+        >
+          Details
+        </Button>
       </div>
     </Card>
   );
@@ -106,17 +106,16 @@ const LogList = ({ files, printers, logs, filter, handleClick, admin }) => {
 
   return (
     <div className="flex flex-col gap-5">
-      {admin ? (
-        <div className="mt-1 self-end">
+      {admin && (
+        <div className="mt-1 w-full self-end sm:w-40">
           <Input
             type="text"
             value={userIDFilter}
             onChange={(e) => setUserIDFilter(e.target.value)}
-            label="userID"
-            className="self-end"
+            label="User ID"
           />
         </div>
-      ) : null}
+      )}
       {currentLogs?.map((log) => {
         const file = files?.find((file) => file._id === log.fileId);
         const printer = printers?.find(
@@ -134,15 +133,15 @@ const LogList = ({ files, printers, logs, filter, handleClick, admin }) => {
           />
         );
       })}
-      {
-        <div className="self-end">
+      {filteredLogs.length > logsPerPage && (
+        <div className="self-center">
           <Pagination
             itemsPerPage={logsPerPage}
             totalItems={filteredLogs.length}
             paginate={paginate}
           />
         </div>
-      }
+      )}
     </div>
   );
 };

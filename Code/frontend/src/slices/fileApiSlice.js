@@ -21,16 +21,16 @@ export const printerApiSlice = apiSlice.injectEndpoints({
     createFile: builder.mutation({
       query: (file) => ({
         url: `${FILE_URL}`,
-        method: 'POST',
+        method: "POST",
         body: file,
       }),
     }),
     storeFile: builder.mutation({
       query: (file) => ({
         url: `${FILE_URL}/store`,
-        method: 'POST',
+        method: "POST",
         body: file,
-      })
+      }),
     }),
     getStoredFiles: builder.query({
       query: (id) => ({
@@ -40,4 +40,11 @@ export const printerApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetFilesQuery, useGetFileQuery, useGetFilesByUserQuery, useCreateFileMutation, useStoreFileMutation, useGetStoredFilesQuery } = printerApiSlice;
+export const {
+  useGetFilesQuery,
+  useGetFileQuery,
+  useGetFilesByUserQuery,
+  useCreateFileMutation,
+  useStoreFileMutation,
+  useGetStoredFilesQuery,
+} = printerApiSlice;
