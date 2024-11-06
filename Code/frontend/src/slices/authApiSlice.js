@@ -9,13 +9,13 @@ export const userApiSlice = apiSlice.injectEndpoints({
       }),
     }),
     updatePage: builder.mutation({
-      query: ({quantity, id}) => ({
+      query: ({ quantity, id }) => ({
         url: `${AUTH_URL}/page`,
-        method: 'POST',
+        method: "POST",
         body: {
           quantity: quantity,
           id: id,
-        }
+        },
       }),
     }),
     logout: builder.mutation({
@@ -26,4 +26,5 @@ export const userApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetInfoQuery, useUpdatePageMutation, useLogoutMutation } = userApiSlice;
+export const { useGetInfoQuery, useUpdatePageMutation, useLogoutMutation } =
+  userApiSlice;

@@ -1,10 +1,4 @@
 import { Card, Avatar, Typography } from "@material-tailwind/react";
-const parentStyle = {
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  height: "10vh",
-};
 import { useGetInfoQuery } from "../slices/authApiSlice";
 import { useEffect } from "react";
 
@@ -13,89 +7,84 @@ const ProfilePage = () => {
 
   useEffect(() => {
     console.log(user);
-  });
+  }, [user]);
 
   return isLoading ? (
     <div>Loading...</div>
   ) : (
-    <div className="grid grid-flow-col grid-rows-6 gap-10">
-      <Avatar src={user.user.avatar} className="row-span-6 m-10 h-60 w-60" />
-      <div className="col-span-9" />
-      <div className="col-span-8">
-        <Card className=" col-span-2 col-start-4 row-span-1 bg-gray-100/50	">
-          <Typography
-            variant="h3"
-            className="flex-none font-bold text-red-400/100"
-            style={parentStyle}
-          >
-            Account Information
-          </Typography>
-        </Card>
+    <div className="flex flex-col items-center p-4 sm:p-8 lg:p-12">
+      <div className="flex w-full max-w-5xl flex-col lg:flex-row lg:items-start">
+        {/* Avatar Section */}
+        <div className="flex justify-center lg:mr-8 lg:justify-start">
+          <Avatar
+            src={user.user.avatar}
+            className="mb-6 h-32 w-32 sm:h-40 sm:w-40 md:h-48 md:w-48 lg:h-60 lg:w-60"
+          />
+        </div>
+
+        {/* Account Information Section */}
+        <div className="flex w-full flex-col lg:w-2/3">
+          <Card className="mb-6 bg-gray-100/50 p-4 text-center shadow-md lg:text-left">
+            <Typography variant="h5" className="font-bold text-red-400">
+              Account Information
+            </Typography>
+          </Card>
+
+          {/* User Details */}
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <Card className="flex flex-col items-center bg-white p-4 shadow-md lg:items-start">
+              <Typography
+                variant="h6"
+                className="mb-2 font-bold text-blue-600 underline"
+              >
+                User Name
+              </Typography>
+              <Typography variant="h6" className="font-normal text-gray-700">
+                {user.user.firstName} {user.user.lastName}
+              </Typography>
+            </Card>
+
+            <Card className="flex flex-col items-center bg-white p-4 shadow-md lg:items-start">
+              <Typography
+                variant="h6"
+                className="mb-2 font-bold text-blue-600 underline"
+              >
+                Role
+              </Typography>
+              <Typography variant="h6" className="font-normal text-gray-700">
+                {user.user.role}
+              </Typography>
+            </Card>
+
+            <Card className="flex flex-col items-center bg-white p-4 shadow-md lg:items-start">
+              <Typography
+                variant="h6"
+                className="mb-2 font-bold text-blue-600 underline"
+              >
+                Email
+              </Typography>
+              <Typography
+                variant="h6"
+                className="break-words text-center font-normal text-gray-700"
+              >
+                {user.user.email}
+              </Typography>
+            </Card>
+
+            <Card className="flex flex-col items-center bg-white p-4 shadow-md lg:items-start">
+              <Typography
+                variant="h6"
+                className="mb-2 font-bold text-blue-600 underline"
+              >
+                Page Balance
+              </Typography>
+              <Typography variant="h6" className="font-normal text-gray-700">
+                {user.user.pageBalance}
+              </Typography>
+            </Card>
+          </div>
+        </div>
       </div>
-      <Card className="col-span-4 row-span-2">
-        <Typography
-          variant="h4"
-          className="flex-none font-bold text-blue-600/90 underline"
-          style={parentStyle}
-        >
-          User Name
-        </Typography>
-        <Typography
-          variant="h4"
-          className="flex-none font-normal"
-          style={parentStyle}
-        >
-          {user.user.firstName} {user.user.lastName}
-        </Typography>
-      </Card>
-      <Card className="col-span-4 row-span-2">
-        <Typography
-          variant="h4"
-          className="flex-none font-bold text-blue-600/90 underline"
-          style={parentStyle}
-        >
-          Role
-        </Typography>
-        <Typography
-          variant="h4"
-          className="flex-none font-normal"
-          style={parentStyle}
-        >
-          {user.user.role}
-        </Typography>
-      </Card>
-      <Card className="col-span-4 row-span-2">
-        <Typography
-          variant="h4"
-          className="flex-none font-bold text-blue-600/90 underline"
-          style={parentStyle}
-        >
-          Email
-        </Typography>
-        <Typography
-          variant="h4"
-          className="flex-none font-normal"
-          style={parentStyle}
-        >
-          {user.user.email}
-        </Typography>
-      </Card>
-      <Card className="col-span-4 row-span-2">
-        <Typography
-          variant="h4"
-          className="flex-none font-bold text-blue-600/90 underline"
-          style={parentStyle}
-        >
-          Page Balance
-        </Typography>
-        <Typography
-          variant="h4"
-          className="flex-none font-normal"
-          style={parentStyle}
-        >
-          {user.user.pageBalance}
-        </Typography>
-      </Card>
     </div>
   );
 };

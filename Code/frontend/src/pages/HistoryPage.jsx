@@ -29,32 +29,25 @@ const LogDialog = ({ open, handleOpen, log }) => {
   const [cancelLog] = useCancelLogMutation();
 
   return printingConfig ? (
-    <Dialog open={open} handler={handleOpen}>
+    <Dialog
+      open={open}
+      handler={handleOpen}
+      size="md"
+      className="mx-auto w-full max-w-lg p-2 sm:p-4"
+    >
       <DialogHeader>Detail of Printing History</DialogHeader>
-      <DialogBody className="flex flex-col gap-5">
-        {Object.keys(printingConfig).map((key) => {
-          return key !== "marginCustomTop" &&
-            key !== "marginCustomBottom" &&
-            key !== "marginCustomLeft" &&
-            key !== "marginCustomRight" &&
-            key !== "pagesToBePrintedCustom" ? (
-            <div key={key} className="mx-3 grid grid-cols-2 items-center">
-              {key === "doubleSided" ? (
-                <Typography variant="h6">Side Number: </Typography>
-              ) : key === "pagesToBePrinted" ? (
-                <Typography variant="h6">Printed Pages: </Typography>
-              ) : key === "pageLayout" ? (
-                <Typography variant="h6">Layout: </Typography>
-              ) : key === "paperSize" ? (
-                <Typography variant="h6">Page Size: </Typography>
-              ) : key === "pagePerSide" ? (
-                <Typography variant="h6">Page per Side: </Typography>
-              ) : key === "margin" ? (
-                <Typography variant="h6">Margin: </Typography>
-              ) : key === "numberOfCopies" ? (
-                <Typography variant="h6">Copies: </Typography>
-              ) : null}
-              <Typography>
+      <DialogBody className="flex flex-col gap-4">
+        {Object.keys(printingConfig).map((key) =>
+          key !== "marginCustomTop" &&
+          key !== "marginCustomBottom" &&
+          key !== "marginCustomLeft" &&
+          key !== "marginCustomRight" &&
+          key !== "pagesToBePrintedCustom" ? (
+            <div key={key} className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+              <Typography variant="h6" className="text-gray-700">
+                {key.replace(/([A-Z])/g, " $1")}:
+              </Typography>
+              <Typography className="text-gray-900">
                 {key === "pagesToBePrinted" && printingConfig[key] === "custom"
                   ? printingConfig["pagesToBePrintedCustom"]
                   : key === "margin" && printingConfig[key] === "default"
@@ -64,16 +57,18 @@ const LogDialog = ({ open, handleOpen, log }) => {
                       : printingConfig[key]}
               </Typography>
             </div>
-          ) : null;
-        })}
-        <div className="mx-3 grid grid-cols-2">
-          <Typography variant="h6">Take Date: </Typography>
-          <Typography>
+          ) : null,
+        )}
+        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+          <Typography variant="h6" className="text-gray-700">
+            Take Date:
+          </Typography>
+          <Typography className="text-gray-900">
             {moment(schedule).format("DD/MM/YYYY, h:mm:ss A")}
           </Typography>
         </div>
       </DialogBody>
-      <DialogFooter className="flex justify-between">
+      <DialogFooter className="flex flex-col gap-2 sm:flex-row sm:justify-between">
         <Button
           color="red"
           onClick={() => {
@@ -113,9 +108,9 @@ const HistoryPage = () => {
 
   const tabItems = [
     createTabItem(
-      "Tất cả",
+      "All",
       "1",
-      <FolderIcon className="w-10" />,
+      <FolderIcon className="w-6 sm:w-10" />,
       <LogList
         files={files}
         printers={printers}
@@ -125,23 +120,21 @@ const HistoryPage = () => {
       />,
     ),
     createTabItem(
-      "Hẹn lịch",
+      "Arranged",
       "2",
-      <CalendarIcon className="w-10" />,
-      <div>
-        <LogList
-          files={files}
-          printers={printers}
-          logs={logs}
-          filter="queued"
-          handleClick={handleClick}
-        />
-      </div>,
+      <CalendarIcon className="w-6 sm:w-10" />,
+      <LogList
+        files={files}
+        printers={printers}
+        logs={logs}
+        filter="queued"
+        handleClick={handleClick}
+      />,
     ),
     createTabItem(
-      "Đã hủy",
+      "Canceled",
       "3",
-      <XCircleIcon className="w-10" />,
+      <XCircleIcon className="w-6 sm:w-10" />,
       <LogList
         files={files}
         printers={printers}
@@ -151,9 +144,9 @@ const HistoryPage = () => {
       />,
     ),
     createTabItem(
-      "Đã in",
+      "Printed",
       "4",
-      <CheckCircleIcon className="w-10" />,
+      <CheckCircleIcon className="w-6 sm:w-10" />,
       <LogList
         files={files}
         printers={printers}
@@ -165,17 +158,19 @@ const HistoryPage = () => {
   ];
 
   return isFilesLoading || isLogsLoading || isPrintersLoading ? (
-    <div>Loading...</div>
+    <div className="flex h-screen items-center justify-center">Loading...</div>
   ) : (
-    <>
-      <Typography variant="h4">PRINTING HISTORY</Typography>
+    <div className="mx-auto max-w-7xl p-4 md:p-8">
+      <Typography variant="h4" className="mb-6 text-center">
+        PRINTING HISTORY
+      </Typography>
       <VerticalTabs item={tabItems} />
       <LogDialog
         open={open}
         handleOpen={handleOpen}
         log={logs?.find((log) => log._id === infoId)}
       />
-    </>
+    </div>
   );
 };
 

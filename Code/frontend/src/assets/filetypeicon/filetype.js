@@ -23,7 +23,7 @@ import pptx_02 from "./pptx-02.png";
 import svg_01 from "./svg-01.jpg";
 import svg_02 from "./svg-02.jpg";
 import svg from "./svg.png";
-import text from "./text.png";
+import txt from "./text.png";
 import text_01 from "./text-01.jpg";
 import text_02 from "./text-02.jpg";
 import xls from "./xls.png";
@@ -62,7 +62,7 @@ export default {
   svg,
   svg_01,
   svg_02,
-  text,
+  txt,
   text_01,
   text_02,
   xls,

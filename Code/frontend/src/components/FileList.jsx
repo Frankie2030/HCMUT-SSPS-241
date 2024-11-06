@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import Pagination from "./Pagination";
 import { useState } from "react";
 
+import PrinterInfoDialog from "./PrinterInfoDialog"; // Import the PrinterInfoDialog
+
 const statusIcon = {
   verified: <CheckIcon className="w-5" />,
   notVerified: <ExclamationTriangleIcon className="w-5" />,
@@ -15,16 +17,14 @@ const statusColor = {
   notVerified: "bg-yellow-500",
 };
 
-const FileItem = ({ file }) => {
+const FileItem = ({ file, printer, onPrinterClick }) => {
   const date = new Date(file.uploadTime);
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, "0");
   const day = String(date.getDate()).padStart(2, "0");
 
   return (
-    <Card
-      className={`mx-1/8 mb-[30px] grid h-40 w-full grid-cols-11 gap-5 p-5`}
-    >
+    <Card className="mx-1/8 mb-[30px] grid h-40 w-full grid-cols-11 gap-5 p-5">
       <div className="col-span-1">
         <img src={filetype[file.type]} alt="" className="w-full p-[10px]" />
       </div>
@@ -33,7 +33,7 @@ const FileItem = ({ file }) => {
           <p className="flex h-1/2 items-center truncate font-semibold">
             {file.name.substring(0, 60)}
           </p>
-          {file.pageNum === 0 ? null : (
+          {file.pageNum !== 0 && (
             <p className="flex h-1/2 items-center font-semibold">
               Page Number: {file.pageNum}
             </p>
@@ -42,7 +42,17 @@ const FileItem = ({ file }) => {
       </div>
       <div className="col-span-5 flex flex-col justify-between">
         <div className="w-full">
-          <p>Printer ID: {file.printerId}</p>
+          {printer && (
+            <>
+              <p
+                className="cursor-pointer font-semibold text-blue-500"
+                onClick={() => onPrinterClick(printer)} // Trigger dialog open on click
+              >
+                Printer Name: {printer.number}
+              </p>
+              <p>Files in Queue: {printer.queue}</p>
+            </>
+          )}
         </div>
         <div className="flex h-1/2 items-end">
           <div
@@ -71,9 +81,21 @@ const FileItem = ({ file }) => {
   );
 };
 
-const FileList = ({ files }) => {
+const FileList = ({ files, printers }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(3);
+  const [selectedPrinter, setSelectedPrinter] = useState(null); // State for selected printer
+  const [dialogOpen, setDialogOpen] = useState(false);
+
+  const handlePrinterClick = (printer) => {
+    setSelectedPrinter(printer);
+    setDialogOpen(true);
+  };
+
+  const handleDialogClose = () => {
+    setDialogOpen(false);
+    setSelectedPrinter(null);
+  };
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -84,7 +106,16 @@ const FileList = ({ files }) => {
   return (
     <div className="flex flex-col gap-5">
       {currentItems?.map((file) => {
-        return <FileItem key={file._id} file={file} />;
+        // Find the printer that matches the file's printerId
+        const printer = printers.find((p) => p._id === file.printerId);
+        return (
+          <FileItem
+            key={file._id}
+            file={file}
+            printer={printer}
+            onPrinterClick={handlePrinterClick} // Pass function to handle printer name click
+          />
+        );
       })}
       <div className="self-end">
         <Pagination
@@ -93,6 +124,15 @@ const FileList = ({ files }) => {
           paginate={paginate}
         />
       </div>
+
+      {/* Printer Info Dialog */}
+      {selectedPrinter && (
+        <PrinterInfoDialog
+          open={dialogOpen}
+          handleOpen={handleDialogClose}
+          printer={selectedPrinter}
+        />
+      )}
     </div>
   );
 };

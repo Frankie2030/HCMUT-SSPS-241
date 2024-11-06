@@ -80,7 +80,9 @@ const ButtonList = () => {
         </div>
       ))}
       <Dialog open={open} handler={handleOpen}>
-        <DialogHeader>Bạn có muốn xóa định dạng {selectedType}?</DialogHeader>
+        <DialogHeader>
+          Do you want to delete format {selectedType}?
+        </DialogHeader>
         <DialogBody className="flex flex-col gap-3"></DialogBody>
         <DialogFooter>
           <Button className="m-4" onClick={handleButtonConfirm}>
@@ -109,7 +111,7 @@ const ButtonList = () => {
             <Option value="png">png</Option>
             <Option value="pptx">pptx</Option>
             <Option value="svg">svg</Option>
-            <Option value="text">text</Option>
+            <Option value="txt">text</Option>
             <Option value="xls">xls</Option>
             <Option value="xlsx">xlsx</Option>
             <Option value="xps">xps</Option>

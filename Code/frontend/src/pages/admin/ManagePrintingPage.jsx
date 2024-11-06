@@ -20,19 +20,19 @@ const ManagePrintingPage = () => {
 
   const tabItems = [
     createTabItem(
-      "Cài đặt loại file in",
+      "Configure File Type",
       "1",
       <MapIcon className="h-5 w-5" />,
       <ButtonList />,
     ),
     createTabItem(
-      "Cài đặt tặng giấy",
+      "Giving pages",
       "2",
       <Cog6ToothIcon className="h-5 w-5" />,
       <FormPaper />,
     ),
     createTabItem(
-      "Xuất báo cáo",
+      "Export Report",
       "3",
       <Cog8ToothIcon className="h-5 w-5" />,
       <Report />,

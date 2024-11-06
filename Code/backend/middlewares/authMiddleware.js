@@ -7,3 +7,12 @@ export function checkLoggedIn(req, res, next) {
   }
   next();
 }
+
+export function checkSPSORole(req, res, next) {
+  if (req.user && req.user.role === "SPSO") {
+    return next();
+  }
+  return res
+    .status(403)
+    .json({ error: "Access forbidden: Insufficient permissions" });
+}

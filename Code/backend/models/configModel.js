@@ -7,9 +7,20 @@ const configurationSchema = new mongoose.Schema({
     type: "array",
     items: {
       type: "string",
-      enum: ["pdf", "jpg", "docx", "xls", "svg", "xlsx", "pptx", "png", "xps"],
+      enum: [
+        "pdf",
+        "jpg",
+        "docx",
+        "xls",
+        "svg",
+        "xlsx",
+        "pptx",
+        "png",
+        "xps",
+        "txt",
+      ],
     },
-    default: []
+    default: [],
   },
 });
 

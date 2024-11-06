@@ -6,6 +6,9 @@ import { useGetInfoQuery } from "./slices/authApiSlice";
 import { useEffect } from "react";
 import { setCredentials } from "./slices/authSlice";
 
+// import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+// import UserListPage from "./pages/UserListPage"; // Import the new page
+
 const App = () => {
   const dispatch = useDispatch();
   const { data: user, isLoading } = useGetInfoQuery();

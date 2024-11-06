@@ -20,13 +20,13 @@ const ManagePrinterPage = () => {
 
   const tabItems = [
     createTabItem(
-      "Danh sách máy in",
+      "Printer List",
       "1",
       <PlusCircleIcon className="w-10" />,
       <PrinterList printers={printers} canSelect={false} />,
     ),
     createTabItem(
-      "Thêm máy in",
+      "Add more Printers",
       "2",
       <ClipboardDocumentIcon className="w-10" />,
       <AddPrinter />,

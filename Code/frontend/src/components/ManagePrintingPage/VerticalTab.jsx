@@ -5,50 +5,82 @@ import {
   Tab,
   TabPanel,
   Typography,
+  Select,
+  Option,
 } from "@material-tailwind/react";
+import { useState } from "react";
 
 export function VerticalTabs({ item }) {
-  const componentStyle = {
-    width: "300px",
-    height: "60px",
-    paddingLeft: "2%",
-    paddingRight: "2%",
-    paddingTop: "6%",
-    paddingBottom: "6%",
-    textAlign: "left",
-    margin: "2%",
-  };
+  const [selectedTab, setSelectedTab] = useState("1");
+
   return (
-    <Tabs value="1" orientation="vertical">
-      <TabsHeader
-        className="bg-transparent w-72"
-        indicatorProps={{
-          className: "bg-gray-900/10 shadow-none !text-gray-900 w-72",
-        }}
+    <div>
+      {/* Dropdown for mobile screens */}
+      <div className="mb-4 block md:hidden">
+        <Select
+          label="Select Tab"
+          value={selectedTab}
+          onChange={(value) => setSelectedTab(value)}
+          className="w-full"
+        >
+          {item.map(({ label, value }) => (
+            <Option key={value} value={value} className="text-left">
+              {label}
+            </Option>
+          ))}
+        </Select>
+      </div>
+
+      {/* Tabs layout for larger screens */}
+      <Tabs
+        value={selectedTab}
+        orientation="vertical"
+        className="hidden md:flex md:flex-row"
+        onChange={(value) => setSelectedTab(value)}
       >
-        {item.map(({ label, value, icon }) => (
-          <Tab
-            key={value}
-            value={value}
-            className="flex items-center justify-start gap-2"
-            style={componentStyle}
-          >
-            <div className="flex gap-3 items-center">
-              {icon}
-              <Typography variant="h5">{label}</Typography>
+        <TabsHeader
+          className="w-full bg-transparent md:w-72"
+          indicatorProps={{
+            className: "bg-gray-900/10 shadow-none !text-gray-900 md:w-72",
+          }}
+        >
+          {item.map(({ label, value, icon }) => (
+            <Tab
+              key={value}
+              value={value}
+              className="flex w-full items-center gap-2 px-4 py-3 md:px-6 md:py-5"
+            >
+              <div className="flex w-full items-center gap-3 text-left">
+                <div className="flex-shrink-0">{icon}</div>
+                <Typography
+                  variant="h5"
+                  className="text-left text-sm md:text-base"
+                >
+                  {label}
+                </Typography>
+              </div>
+            </Tab>
+          ))}
+        </TabsHeader>
+        <TabsBody className="w-full md:ml-10">
+          {item.map(({ value, desc }) => (
+            <TabPanel key={value} value={value} className="py-0 text-left">
+              {desc}
+            </TabPanel>
+          ))}
+        </TabsBody>
+      </Tabs>
+
+      {/* Display selected tab content on smaller screens */}
+      <div className="mt-4 block md:hidden">
+        {item
+          .filter(({ value }) => value === selectedTab)
+          .map(({ value, desc }) => (
+            <div key={value} className="py-0 text-left">
+              {desc}
             </div>
-          </Tab>
-        ))}
-      </TabsHeader>
-      <TabsBody
-        className="ms-10"
-      >
-        {item.map(({ value, desc }) => (
-          <TabPanel key={value} value={value} className="py-0">
-            {desc}
-          </TabPanel>
-        ))}
-      </TabsBody>
-    </Tabs>
+          ))}
+      </div>
+    </div>
   );
 }

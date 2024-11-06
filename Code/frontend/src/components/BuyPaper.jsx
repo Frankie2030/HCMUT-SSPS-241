@@ -241,7 +241,7 @@ const BuyPaper = () => {
                 variant="small"
                 className="mt-2 text-left font-normal"
               >
-                Price: 200đ/ tờ A4
+                Price: 200đ/ A4 pages
               </Typography>
             </figure>
             <div className="flex items-center gap-3">

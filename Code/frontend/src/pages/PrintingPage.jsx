@@ -25,19 +25,19 @@ const PrintingPage = () => {
   const tabItems = printers
     ? [
         createTabItem(
-          "Danh sách máy in",
+          "Printer List",
           "1",
           <ClipboardDocumentIcon className="w-10" />,
           <PrinterList printers={printers} canSelect={true} />,
         ),
         createTabItem(
-          "Danh sách tài liệu",
+          "File List",
           "2",
           <ListBulletIcon className="w-10" />,
-          <FileList files={files} />,
+          <FileList files={files} printers={printers} />, // Pass printers to FileList
         ),
         createTabItem(
-          "Mua giấy in",
+          "Buying Pages",
           "3",
           <ShoppingCartIcon className="w-10" />,
           <BuyPaper />,

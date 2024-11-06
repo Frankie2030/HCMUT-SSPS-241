@@ -11,6 +11,7 @@ import ManagePrinterPage from "./pages/admin/ManagePrinterPage";
 import ManagePrintingPage from "./pages/admin/ManagePrintingPage";
 import FilePreviewPage from "./pages/FilePreviewPage.jsx";
 import AdminHistoryPage from "./pages/admin/HistoryPage";
+import UserListPage from "./pages/admin/UserListPage"; // Import the new page
 import SSOPage from "./pages/SSOPage";
 import NotFoundPage from "./pages/NotFoundPage"; // Import the 404 page component
 import "./index.css";
@@ -45,6 +46,7 @@ const router = createBrowserRouter(
             element={<ManagePrintingPage />}
           />
           <Route path="/admin/history" element={<AdminHistoryPage />} />
+          <Route path="/admin/user-list" element={<UserListPage />} />
         </Route>
       </Route>
       <Route path="/login" element={<LoginPage />} />
