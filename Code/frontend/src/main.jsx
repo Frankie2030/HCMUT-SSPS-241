@@ -36,7 +36,6 @@ const router = createBrowserRouter(
         <Route path="" element={<CustomerRoute />}>
           <Route path="/printing" element={<PrintingPage />} />
           <Route path="/history" element={<HistoryPage />} />
-          <Route path="/printing" element={<PrintingPage />} />
           <Route path="/preview/:id" element={<FilePreviewPage />} />
         </Route>
         <Route path="/admin" element={<AdminRoute />}>

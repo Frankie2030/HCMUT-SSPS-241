@@ -12,6 +12,7 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
   pageBalance: { type: Number, default: 0 },
+  pageUsed: { type: Number, default: 0 }, // New attribute
 });
 
 export default mongoose.model("User", userSchema);

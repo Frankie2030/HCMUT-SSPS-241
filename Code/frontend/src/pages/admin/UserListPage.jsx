@@ -1,4 +1,3 @@
-// src/pages/admin/UserListPage.jsx
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import {
@@ -14,17 +13,19 @@ import {
   CardBody,
   Alert,
 } from "@material-tailwind/react";
+import Loading from "../../components/Loading";
 
 const UserListPage = () => {
   const { data, isLoading, error } = useGetAllUsersQuery();
   const [updateUser, { isLoading: isUpdating, isError, isSuccess }] =
     useUpdateUserMutation();
-  const loggedInUserId = useSelector((state) => state.auth.userData._id);
+  const loggedInUser = useSelector((state) => state.auth.userData);
+  const loggedInUserId = loggedInUser._id;
   const [editUserId, setEditUserId] = useState(null);
   const [newRole, setNewRole] = useState("");
   const [feedbackMessage, setFeedbackMessage] = useState("");
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loading />;
   if (error) return <div>Error fetching users.</div>;
 
   const users = Array.isArray(data) ? data : data?.users || [];
@@ -47,6 +48,15 @@ const UserListPage = () => {
       setFeedbackMessage("Failed to update role.");
     }
     setEditUserId(null);
+  };
+
+  const isEditAllowed = (user) => {
+    // Allow editing only if the logged-in user has the specific email and role
+    return (
+      loggedInUser.email === "phu.nguyenquang2004@hcmut.edu.vn" &&
+      loggedInUser.role === "SPSO" &&
+      user._id !== loggedInUserId // Prevent self-editing
+    );
   };
 
   return (
@@ -100,6 +110,9 @@ const UserListPage = () => {
               <Typography color="gray" className="mb-2">
                 Page Balance: {user.pageBalance}
               </Typography>
+              <Typography color="gray" className="mb-2">
+                Page Used: {user.pageUsed}
+              </Typography>
               <div className="flex items-center">
                 <Typography color="gray" className="mr-2">
                   Role:
@@ -117,38 +130,44 @@ const UserListPage = () => {
                   <Typography color="blue-gray">{user.role}</Typography>
                 )}
               </div>
-              {user._id === loggedInUserId ? (
-                <Typography variant="small" color="blue" className="mt-2">
-                  You cannot edit your own role.
-                </Typography>
-              ) : editUserId === user._id ? (
-                <div className="mt-4 flex justify-end space-x-2">
-                  <Button
-                    color="blue"
-                    size="sm"
-                    onClick={() => handleSaveClick(user._id)}
-                    disabled={isUpdating}
-                  >
-                    {isUpdating ? "Saving..." : "Save"}
-                  </Button>
-                  <Button
-                    color="gray"
-                    size="sm"
-                    onClick={() => setEditUserId(null)}
-                  >
-                    Cancel
-                  </Button>
-                </div>
+              {isEditAllowed(user) ? (
+                editUserId === user._id ? (
+                  <div className="mt-4 flex justify-end space-x-2">
+                    <Button
+                      color="blue"
+                      size="sm"
+                      onClick={() => handleSaveClick(user._id)}
+                      disabled={isUpdating}
+                    >
+                      {isUpdating ? "Saving..." : "Save"}
+                    </Button>
+                    <Button
+                      color="gray"
+                      size="sm"
+                      onClick={() => setEditUserId(null)}
+                    >
+                      Cancel
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="mt-4 flex justify-end">
+                    <Button
+                      color="blue"
+                      size="sm"
+                      onClick={() => handleEditClick(user._id, user.role)}
+                    >
+                      Edit Role
+                    </Button>
+                  </div>
+                )
               ) : (
-                <div className="mt-4 flex justify-end">
-                  <Button
-                    color="blue"
-                    size="sm"
-                    onClick={() => handleEditClick(user._id, user.role)}
-                  >
-                    Edit Role
-                  </Button>
-                </div>
+                <Typography
+                  variant="small"
+                  color="red"
+                  className="mt-2 text-center"
+                >
+                  You do not have permission to edit this user.
+                </Typography>
               )}
             </CardBody>
           </Card>

@@ -140,13 +140,14 @@ const Invoice = ({ quantity, combo, comboList }) => {
   );
 };
 
-const CustomListItem = ({ htmlForId, labelText }) => {
+const CustomListItem = ({ htmlForId, labelText, icon }) => {
   return (
     <ListItem className="border-2 border-solid border-[#dae2e8] p-0">
       <label
         htmlFor={htmlForId}
         className="flex w-full cursor-pointer items-center px-3 py-2"
       >
+        {icon && <img src={icon} alt="icon" className="mr-3 h-6 w-6" />}
         <ListItemPrefix className="mr-3">
           <Radio
             name="vertical-list"
@@ -226,6 +227,16 @@ const BuyPaper = () => {
     },
   ];
 
+  const paymentIcons = {
+    bkpay:
+      "https://upload.wikimedia.org/wikipedia/commons/d/de/HCMUT_official_logo.png",
+    momo: "https://cdn.haitrieu.com/wp-content/uploads/2022/10/Logo-MoMo-Square.png",
+    zalopay:
+      "https://cdn.haitrieu.com/wp-content/uploads/2022/10/Logo-ZaloPay.png",
+    vnpay:
+      "https://vinadesign.vn/uploads/thumbnails/800/2023/05/vnpay-logo-vinadesign-25-12-59-16.jpg",
+  };
+
   return (
     <div className="grid grid-cols-2">
       <div className="flex flex-col gap-10 px-5">
@@ -256,18 +267,22 @@ const BuyPaper = () => {
             <CustomListItem
               htmlForId="pay-with-bkpay"
               labelText="Thanh toán qua BKPay"
+              icon={paymentIcons.bkpay}
             />
             <CustomListItem
               htmlForId="pay-with-momo"
               labelText="Thanh toán bằng ví MoMo"
+              icon={paymentIcons.momo}
             />
             <CustomListItem
               htmlForId="pay-with-zalopay"
               labelText="Thanh toán bằng ví ZaloPay"
+              icon={paymentIcons.zalopay}
             />
             <CustomListItem
               htmlForId="pay-with-vnpay"
               labelText="Thanh toán bằng VNPay"
+              icon={paymentIcons.vnpay}
             />
           </List>
         </div>

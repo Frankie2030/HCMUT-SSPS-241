@@ -17,6 +17,10 @@ const printerSchema = new mongoose.Schema(
       required: true,
       default: "disabled",
     },
+    restricted: {
+      type: Boolean,
+      default: false, // Default to false for regular printers
+    },
   },
   { timestamps: { createdAt: "addedDate" } }
 );
