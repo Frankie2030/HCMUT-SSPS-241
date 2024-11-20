@@ -19,6 +19,7 @@ import { useGetFilesQuery } from "../../slices/fileApiSlice";
 import { useGetPrinterQuery } from "../../slices/printerApiSlice";
 import { useState } from "react";
 import moment from "moment";
+import Loading from "../../components/Loading";
 
 const LogDialog = ({ open, handleOpen, log }) => {
   const printingConfig = log?.printingProperties;
@@ -155,7 +156,8 @@ const HistoryPage = () => {
   ];
 
   return isFilesLoading || isLogsLoading || isPrintersLoading ? (
-    <div>Loading...</div>
+    // <div>Loading...</div>
+    <Loading />
   ) : (
     <div className="flex flex-col">
       <Typography variant="h4">PRINTING HISTORY</Typography>

@@ -118,17 +118,20 @@ const PrinterItem = ({ printer, canSelect, showAlert }) => {
               className:
                 "left-1 border-none peer-checked:translate-x-12 w-10 h-10",
             }}
+            disabled={printer.restricted}
           />
           <div className="flex gap-2">
-            <Button
-              variant="filled"
-              color="red"
-              size="lg"
-              className="w-24 rounded-full font-medium"
-              onClick={openDeleteConfirmation}
-            >
-              Delete
-            </Button>
+            {!printer.restricted && ( // Hide delete button for load-balancing printers
+              <Button
+                variant="filled"
+                color="red"
+                size="lg"
+                className="w-24 rounded-full font-medium"
+                onClick={openDeleteConfirmation}
+              >
+                Delete
+              </Button>
+            )}
             <IconButton variant="text" onClick={handleOpenInfo}>
               <InformationCircleIcon className="w-7" color="blue" />
             </IconButton>

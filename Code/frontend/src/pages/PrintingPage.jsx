@@ -10,6 +10,7 @@ import FileList from "../components/FileList";
 import BuyPaper from "../components/BuyPaper";
 import { useGetPrinterQuery } from "../slices/printerApiSlice";
 import { useGetFilesByUserQuery } from "../slices/fileApiSlice";
+import Loading from "../components/Loading";
 
 const PrintingPage = () => {
   const { data: printers, isLoading: isPrintersLoading } = useGetPrinterQuery();
@@ -46,7 +47,8 @@ const PrintingPage = () => {
     : [];
 
   return isPrintersLoading || isFilesLoading ? (
-    <div>Loading...</div>
+    // <div>Loading...</div>
+    <Loading />
   ) : (
     <>
       <Typography variant="h4">PRINT NOW</Typography>

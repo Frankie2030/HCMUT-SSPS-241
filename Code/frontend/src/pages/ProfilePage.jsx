@@ -1,6 +1,7 @@
 import { Card, Avatar, Typography } from "@material-tailwind/react";
 import { useGetInfoQuery } from "../slices/authApiSlice";
 import { useEffect } from "react";
+import Loading from "../components/Loading";
 
 const ProfilePage = () => {
   const { data: user, isLoading } = useGetInfoQuery();
@@ -10,7 +11,8 @@ const ProfilePage = () => {
   }, [user]);
 
   return isLoading ? (
-    <div>Loading...</div>
+    // <div>Loading...</div>
+    <Loading />
   ) : (
     <div className="flex flex-col items-center p-4 sm:p-8 lg:p-12">
       <div className="flex w-full max-w-5xl flex-col lg:flex-row lg:items-start">
@@ -80,6 +82,18 @@ const ProfilePage = () => {
               </Typography>
               <Typography variant="h6" className="font-normal text-gray-700">
                 {user.user.pageBalance}
+              </Typography>
+            </Card>
+
+            <Card className="flex flex-col items-center bg-white p-4 shadow-md lg:items-start">
+              <Typography
+                variant="h6"
+                className="mb-2 font-bold text-blue-600 underline"
+              >
+                Page Used
+              </Typography>
+              <Typography variant="h6" className="font-normal text-gray-700">
+                {user.user.pageUsed}
               </Typography>
             </Card>
           </div>
