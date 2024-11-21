@@ -5,36 +5,6 @@ import Configuration from "./models/configModel.js"; // Import configuration mod
 import User from "./models/userModel.js"; // Import user model
 import printers_balancing from "./data/printerData-loadbalancing.js"; // Import load-balancing printers
 
-// async function start() {
-//   cron.schedule("* * * * *", async function () {
-//     console.log("Running...");
-//     const now = new Date();
-//     try {
-//       const logs = await Log.find({
-//         schedule: { $lte: now },
-//         status: { $nin: ["cancelled", "completed"] },
-//       });
-//       for (const log of logs) {
-//         log.status = "completed";
-//         await log.save();
-//         console.log(`Updated log ${log._id}`);
-
-//         const printer = await Printer.findById(log.printerId);
-//         if (!printer) {
-//           console.log(`Printer not found for log ${log._id}`);
-//           continue;
-//         }
-
-//         printer.queue = Math.max(0, printer.queue - 1);
-//         await printer.save();
-//         console.log(`Decreased queue for printer ${printer._id}`);
-//       }
-//     } catch (err) {
-//       console.error("Error updating log or printer:", err);
-//     }
-//   });
-// }
-
 function convertToTimeZone(date, timeZone) {
   return new Date(date.toLocaleString("en-US", { timeZone: timeZone }));
 }
@@ -55,10 +25,10 @@ async function start() {
 
     // Task 1: Add load-balancing printers during peak hours
     let peakHoursStart = new Date();
-    peakHoursStart.setHours(17, 53, 0); // Set peak hours start time (5:30 PM local time)
+    peakHoursStart.setHours(20, 50, 0); // Set peak hours start time (12:00 PM local time)
     peakHoursStart = convertToTimeZone(peakHoursStart, timeZone);
 
-    let peakHoursEnd = new Date(peakHoursStart.getTime() + 1 * 60 * 1000); // 2 hours later
+    let peakHoursEnd = new Date(peakHoursStart.getTime() + 1 * 60 * 1000);
     peakHoursEnd = convertToTimeZone(peakHoursEnd, timeZone);
 
     console.log("Current Time:", localNow);
@@ -81,14 +51,14 @@ async function start() {
               ...printer,
               restricted: true, // Flag to mark as load-balancing printer
             });
-            console.log(`Added printer: ${printer.number}`);
+            // console.log(`Added printer: ${printer.number}`);
           }
         }
       }
 
       // Task 2: Remove load-balancing printers after peak hours
       if (localNow >= peakHoursEnd) {
-        console.log("Peak hours ended: Removing load-balancing printers...");
+        // console.log("Peak hours ended: Removing load-balancing printers...");
         const result = await Printer.deleteMany({ restricted: true });
         console.log(`Removed ${result.deletedCount} load-balancing printers.`);
       }
@@ -125,32 +95,43 @@ async function start() {
     // Task 4: Add Default Pages to Users at Distribution Date
     try {
       const config = await Configuration.findOne();
+      const timeZone = "Asia/Ho_Chi_Minh";
       if (config && config.distributionDates) {
-        const distributionTime = new Date(config.distributionDates); // Stored in UTC
-        const localDistributionTime = convertToTimeZone(
-          distributionTime,
+        const distributionTime = convertToTimeZone(
+          new Date(config.distributionDates),
           timeZone
-        ); // Convert to local time zone
+        ); // Stored in UTC
 
         console.log(
           "Configured Distribution Time (UTC):",
           distributionTime.toISOString()
         );
+
+        // distributionTime = convertToTimeZone(distributionTime, timeZone);
         // console.log(
-        //   "Configured Distribution Time (Local):",
-        //   localDistributionTime.toISOString()
+        //   "Configured Distribution Time (UTC):",
+        //   distributionTime.toISOString()
         // );
 
         // Define 1-minute margin for comparison in local time zone
-        const startMargin = distributionTime;
+        const startMargin = new Date(distributionTime);
         const endMargin = new Date(distributionTime.getTime() + 60000);
 
+        console.log(`Local now ${localNow.toISOString()}`);
         console.log(
           `Margin Window (Local): Start=${startMargin.toISOString()}, End=${endMargin.toISOString()}`
         );
 
+        // const date = new Date(); // Current date and time
+
+        // const vietnamTime = convertToTimeZone(date, timeZone);
+
+        // console.log("Original Date (UTC):", date.toISOString());
+        // console.log("Vietnam Time:", vietnamTime.toISOString());
+        // console.log("Vietnam Time (Readable):", vietnamTime.toString());
+
         // Compare in the local time zone
-        if (localNow >= startMargin && localNow <= endMargin) {
+        if (localNow >= startMargin && localNow < endMargin) {
           console.log("It's time to distribute pages!");
 
           // Add defaultPages to all users' pageBalance

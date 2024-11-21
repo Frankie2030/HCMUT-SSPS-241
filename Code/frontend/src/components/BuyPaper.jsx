@@ -266,22 +266,22 @@ const BuyPaper = () => {
           <List className="gap-3">
             <CustomListItem
               htmlForId="pay-with-bkpay"
-              labelText="Thanh toán qua BKPay"
+              labelText="Payment Method: BKPay"
               icon={paymentIcons.bkpay}
             />
             <CustomListItem
               htmlForId="pay-with-momo"
-              labelText="Thanh toán bằng ví MoMo"
+              labelText="Payment Method: MoMo"
               icon={paymentIcons.momo}
             />
             <CustomListItem
               htmlForId="pay-with-zalopay"
-              labelText="Thanh toán bằng ví ZaloPay"
+              labelText="Payment Method: ZaloPay"
               icon={paymentIcons.zalopay}
             />
             <CustomListItem
               htmlForId="pay-with-vnpay"
-              labelText="Thanh toán bằng VNPay"
+              labelText="Payment Method: VNPay"
               icon={paymentIcons.vnpay}
             />
           </List>

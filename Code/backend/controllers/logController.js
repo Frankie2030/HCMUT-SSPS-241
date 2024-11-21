@@ -2,6 +2,15 @@ import PrintingLog from "../models/printingLogModel.js";
 import Printer from "../models/printerModel.js";
 
 const createPrintingLog = async (req, res) => {
+  const { printingProperties } = req.body;
+  const { numberOfCopies } = printingProperties;
+
+  // Validate numberOfCopies
+  if (typeof numberOfCopies !== "number" || numberOfCopies <= 0) {
+    console.error("Invalid numberOfCopies:", numberOfCopies);
+    return res.status(400).json({ message: "Invalid number of copies" });
+  }
+
   const log = new PrintingLog(req.body);
   try {
     await log.save();

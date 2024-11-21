@@ -110,9 +110,9 @@ const UserListPage = () => {
               <Typography color="gray" className="mb-2">
                 Page Balance: {user.pageBalance}
               </Typography>
-              <Typography color="gray" className="mb-2">
+              {/* <Typography color="gray" className="mb-2">
                 Page Used: {user.pageUsed}
-              </Typography>
+              </Typography> */}
               <div className="flex items-center">
                 <Typography color="gray" className="mr-2">
                   Role:

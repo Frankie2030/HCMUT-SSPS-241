@@ -93,6 +93,7 @@ const AddPrinter = () => {
               className="border border-gray-300 bg-gray-50 placeholder:text-gray-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
               name="location"
               onChange={handleChange}
+              label="Location"
             />
           </div>
 
@@ -124,6 +125,7 @@ const AddPrinter = () => {
               className="border border-gray-300 bg-gray-50 placeholder:text-gray-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
               name="number"
               onChange={handleChange}
+              label="Printer ID"
             />
           </div>
 

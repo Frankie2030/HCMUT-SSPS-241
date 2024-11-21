@@ -93,7 +93,7 @@ const PrinterItem = ({ printer, canSelect, showAlert }) => {
             size="lg"
             className="w-full rounded-full font-medium"
             onClick={handleOpen}
-            disabled={printer.queue >= 1}
+            disabled={printer.queue >= 10}
           >
             Choose
           </Button>
