@@ -145,7 +145,11 @@ const PrintingConfig = ({ fileId, numPages }) => {
   const handleSubmit = async () => {
     try {
       const qty = calculatePage({ numPages, ...formValues });
+      console.log("Pages to subtract:", qty);
+
       const result = await updatePage({ quantity: 0 - qty, id: userId });
+      console.log("Update page result:", result);
+
       if (result.error) {
         alert(result.error.data.message);
         navigate("/printing");
@@ -155,15 +159,38 @@ const PrintingConfig = ({ fileId, numPages }) => {
           fileId,
           printerId: file.printerId,
           schedule: date,
-          ...formValues,
+          printingProperties: {
+            pagesToBePrinted: formValues.pagesToBePrinted,
+            pagesToBePrintedCustom: formValues.pagesToBePrintedCustom,
+            pageLayout: formValues.pageLayout,
+            paperSize: formValues.paperSize,
+            pagePerSide: Number(formValues.pagePerSide), // Ensure numeric type
+            doubleSided: formValues.doubleSided,
+            margin: formValues.margin,
+            marginCustomTop: formValues.marginCustomTop,
+            marginCustomBottom: formValues.marginCustomBottom,
+            marginCustomLeft: formValues.marginCustomLeft,
+            marginCustomRight: formValues.marginCustomRight,
+            numberOfCopies: Number(formValues.numberOfCopies), // Ensure numeric type
+          },
         };
-        await createLog(payload).unwrap();
-        navigate("/history");
-        window.location.reload();
+
+        console.log("Payload for createLog:", payload);
+
+        const logResponse = await createLog(payload).unwrap();
+        console.log("Log created successfully:", logResponse);
+
+        setTimeout(() => {
+          console.log("Redirecting to history page...");
+          navigate("/history");
+          window.location.reload();
+        }, 1000); // Delay of 10 seconds
       }
     } catch (err) {
       if (isError) {
         console.error("Failed to create log:", error);
+      } else {
+        console.error("Unexpected error:", err);
       }
     }
   };

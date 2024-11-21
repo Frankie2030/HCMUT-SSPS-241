@@ -24,6 +24,18 @@ import { useState } from "react";
 import moment from "moment";
 import Loading from "../components/Loading";
 
+import React from "react";
+
+// Function to transform keys to title case
+const toTitleCase = (str) => {
+  return str
+    .replace(/([A-Z])/g, " $1") // Add space before capital letters
+    .toLowerCase() // Convert all to lowercase
+    .split(" ") // Split into words
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize the first letter of each word
+    .join(" "); // Join back into a string
+};
+
 const LogDialog = ({ open, handleOpen, log }) => {
   const printingConfig = log?.printingProperties;
   const schedule = log?.schedule;
@@ -46,7 +58,7 @@ const LogDialog = ({ open, handleOpen, log }) => {
           key !== "pagesToBePrintedCustom" ? (
             <div key={key} className="grid grid-cols-1 gap-2 sm:grid-cols-2">
               <Typography variant="h6" className="text-gray-700">
-                {key.replace(/([A-Z])/g, " $1")}:
+                {toTitleCase(key)}:
               </Typography>
               <Typography className="text-gray-900">
                 {key === "pagesToBePrinted" && printingConfig[key] === "custom"

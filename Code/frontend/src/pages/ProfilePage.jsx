@@ -85,7 +85,7 @@ const ProfilePage = () => {
               </Typography>
             </Card>
 
-            <Card className="flex flex-col items-center bg-white p-4 shadow-md lg:items-start">
+            {/* <Card className="flex flex-col items-center bg-white p-4 shadow-md lg:items-start">
               <Typography
                 variant="h6"
                 className="mb-2 font-bold text-blue-600 underline"
@@ -95,7 +95,7 @@ const ProfilePage = () => {
               <Typography variant="h6" className="font-normal text-gray-700">
                 {user.user.pageUsed}
               </Typography>
-            </Card>
+            </Card> */}
           </div>
         </div>
       </div>

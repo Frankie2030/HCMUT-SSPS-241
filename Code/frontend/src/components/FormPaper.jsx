@@ -8,6 +8,7 @@ import {
 const FormPaper = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null); // New state for time
+  const [numericValue, setNumericValue] = useState("");
   const [updateDefaults] = useUpdateDefaultsMutation();
   const { data: defaults } = useGetDefaultsQuery();
 
@@ -20,21 +21,24 @@ const FormPaper = () => {
     setSelectedTime(event.target.value);
   };
 
-  const [numericValue, setNumericValue] = useState("");
-
   const handleNumericChange = (e) => {
-    const value = e.target.value.replace(/\D/g, "");
+    const value = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
     setNumericValue(value);
+  };
+
+  // Convert a date to the Vietnam timezone (for display purposes)
+  const convertToVietnamTime = (date) => {
+    const timeZone = "Asia/Ho_Chi_Minh";
+    return new Date(date.toLocaleString("en-US", { timeZone }));
   };
 
   useEffect(() => {
     if (defaults?.defaultPages) setNumericValue(defaults?.defaultPages);
     if (defaults?.distributionDates) {
-      // const date = new Date(defaults?.distributionDates);
-      // setSelectedDate(date.toISOString().slice(0, 10));
-      const dateTime = new Date(defaults?.distributionDates);
-      setSelectedDate(dateTime.toISOString().slice(0, 10)); // Extract date (YYYY-MM-DD)
-      setSelectedTime(dateTime.toISOString().slice(11, 16)); // Extract time (HH:mm)
+      const utcDate = new Date(defaults.distributionDates); // UTC time from the server
+      const vietnamTime = convertToVietnamTime(utcDate); // Convert to Vietnam time for display
+      setSelectedDate(vietnamTime.toISOString().slice(0, 10)); // Extract date (YYYY-MM-DD)
+      setSelectedTime(vietnamTime.toTimeString().slice(0, 5)); // Extract time (HH:mm)
     }
   }, [defaults]);
 
@@ -44,22 +48,20 @@ const FormPaper = () => {
       return;
     }
 
-    // Combine date and time
-    const localDateTime = new Date(`${selectedDate}T${selectedTime}`);
+    // Combine the selected date and time into a local date-time object in Asia/Ho_Chi_Minh timezone
+    const localDateTime = new Date(`${selectedDate}T${selectedTime}:00`); // User's local time
+    console.log("Local Date Time (Asia/Ho_Chi_Minh):", localDateTime);
 
-    // Convert localDateTime to UTC manually if you want to save it in local timezone
-    const utcDateTime = new Date(
-      localDateTime.getTime() - localDateTime.getTimezoneOffset() * 60000,
-    );
-
-    console.log("Local Time (ISO):", localDateTime.toISOString());
-    console.log("UTC Time (ISO):", utcDateTime.toISOString());
+    // Adjust for the Asia/Ho_Chi_Minh timezone (+7 hours) to convert to UTC
+    // const utcDateTime = new Date(localDateTime.getTime() - 7 * 60 * 60 * 1000); // Subtract 7 hours
+    // console.log("UTC Date Time for Storage:", utcDateTime);
 
     try {
-      // Update the defaults with the UTC date-time and default pages
+      // Update the defaults with UTC time and default pages
       await updateDefaults({
         defaultPages: numericValue,
-        distributionDates: utcDateTime.toISOString(), // Save UTC time
+        // distributionDates: utcDateTime.toISOString(), // Store as UTC ISO string
+        distributionDates: localDateTime.toISOString(), // Store as UTC ISO string
       });
       window.location.reload();
     } catch (error) {
