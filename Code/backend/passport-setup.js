@@ -1,7 +1,7 @@
 import passport from "passport";
 import { Strategy } from "passport-google-oauth20";
 import config from "./config.js";
-import User from "./models/userModel.js"; 
+import User from "./models/userModel.js";
 
 const AUTH_OPTIONS = {
   callbackURL: "/auth/google/callback",
@@ -37,7 +37,7 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((id, done) => {
-  User.findById(id).then(user => {
+  User.findById(id).then((user) => {
     done(null, user);
   });
 });

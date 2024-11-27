@@ -71,6 +71,10 @@ const Header = () => {
   );
 
   return (
+    // <Navbar
+    //   className="mx-auto bg-[#0373fc] px-4 py-2 text-white lg:px-8 lg:py-4"
+    //   fullWidth={true}
+    // >
     <Navbar
       className="mx-auto bg-blue-fill bg-cover px-4 py-2 text-white lg:px-8 lg:py-4"
       fullWidth={true}
