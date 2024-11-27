@@ -13,7 +13,7 @@
 
 </div>
 
-<h2 align="center">💡 Project: Title Later Added 💡</h2>
+<h2 align="center">💡 Project: HCMUT_SSPS: Student Smart Printing Service 💡</h2>
 
 ---
 
@@ -39,8 +39,6 @@
   <br /><br />
   <img src="Capture.PNG" alt="File Structure" style="width: 350px; height: auto;">
 </div> -->
-
-# HCMUT_SSPS: Student Smart Printing Service
 
 ## Overview
 
