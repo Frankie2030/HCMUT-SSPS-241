@@ -25,7 +25,7 @@ async function start() {
 
     // Task 1: Add load-balancing printers during peak hours
     let peakHoursStart = new Date();
-    peakHoursStart.setHours(14, 14, 0); // Set peak hours start time (12:00 PM local time)
+    peakHoursStart.setHours(15, 44, 0); // Set peak hours start time (12:00 PM local time)
     peakHoursStart = convertToTimeZone(peakHoursStart, timeZone);
 
     let peakHoursEnd = new Date(peakHoursStart.getTime() + 1 * 60 * 1000);
