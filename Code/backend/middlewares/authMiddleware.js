@@ -1,4 +1,5 @@
 export function checkLoggedIn(req, res, next) {
+  console.log("Checking if user is logged in:", req.user); // Debugging
   const isLoggedIn = req.isAuthenticated() && req.user;
   if (!isLoggedIn) {
     return res.status(401).json({
