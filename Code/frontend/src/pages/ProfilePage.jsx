@@ -12,6 +12,11 @@ import { useGetLogsQuery } from "../slices/logApiSlice";
 import FileList from "../components/FileList";
 import { useEffect, useState } from "react";
 import Loading from "../components/Loading";
+import filetype from "../assets/filetypeicon/filetype";
+
+// added
+import { useParams } from "react-router-dom";
+import { useGetUserByIdQuery } from "../slices/userApiSlice";
 
 const ProfilePage = () => {
   const { data: user, isLoading } = useGetInfoQuery();
@@ -47,6 +52,12 @@ const ProfilePage = () => {
     }
     return total;
   }, 0);
+  const totalQueuedFiles = logs?.filter(
+    (log) => log.status === "queued",
+  ).length;
+  const totalCanceledFiles = logs?.filter(
+    (log) => log.status === "canceled",
+  ).length;
 
   return isLoading || isFilesLoading || isLogsLoading || isLogsLoadingBuying ? (
     <Loading />
@@ -56,8 +67,9 @@ const ProfilePage = () => {
       <div className="flex w-full max-w-5xl flex-col lg:flex-row lg:items-start">
         <div className="flex justify-center lg:mr-8 lg:justify-start">
           <Avatar
-            src={user.user.avatar}
+            src={user.user.avatar?.replace("s96-c", "s800-c")}
             className="mb-6 h-32 w-32 sm:h-40 sm:w-40 md:h-48 md:w-48 lg:h-60 lg:w-60"
+            alt={`${user.user.firstName} ${user.user.lastName}`}
           />
         </div>
 
@@ -99,47 +111,56 @@ const ProfilePage = () => {
       {/* Show these sections only for 'customer' role */}
       {user.user.role === "customer" && (
         <>
-          {/* Uploaded Files Section */}
-          <div className="mt-8 w-full max-w-5xl">
-            <Typography variant="h5" className="mb-4 font-bold text-blue-600">
-              Uploaded Files
-            </Typography>
-            <div className="flex flex-wrap items-center justify-between gap-4">
-              <Input
-                placeholder="Search files by name..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="flex-grow"
-                label={<span style={{ color: "#1a202c" }}>Search</span>}
-              />
-              <Button
-                variant="outlined"
-                className="h-fit"
-                onClick={() =>
-                  setSortOption((prev) =>
-                    prev === "uploadTime" ? "name" : "uploadTime",
-                  )
-                }
-              >
-                Sort by {sortOption === "uploadTime" ? "Name" : "Upload Time"}
-              </Button>
-            </div>
-            <FileList files={sortedFiles} printers={[]} />
-          </div>
-
           {/* Printing Files Section */}
           <div className="mt-8 w-full max-w-5xl">
             <Typography variant="h5" className="mb-4 font-bold text-blue-600">
-              Printing Files
+              Printing Files Statistics
             </Typography>
-            <Card className="bg-gray-100 p-4 shadow-md">
-              <Typography variant="h6" className="mb-2 text-gray-700">
-                Total Files Printed: {totalPrintedFiles}
-              </Typography>
-              <Typography variant="h6" className="text-gray-700">
-                Total Copies Printed: {totalPrintedCopies}
-              </Typography>
-            </Card>
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {[
+                {
+                  label: "Total Files Printed",
+                  value: totalPrintedFiles,
+                  icon: "📄",
+                },
+                {
+                  label: "Total Copies Printed",
+                  value: totalPrintedCopies,
+                  icon: "📑",
+                },
+                {
+                  label: "Total Queued Files",
+                  value: totalQueuedFiles,
+                  icon: "⏳",
+                },
+                {
+                  label: "Total Canceled Files",
+                  value: totalCanceledFiles,
+                  icon: "❌",
+                },
+              ].map((stat, index) => (
+                <Card
+                  key={index}
+                  className="flex flex-col items-center bg-blue-50 p-4 shadow-md transition-shadow hover:shadow-lg lg:items-start"
+                >
+                  <div className="mb-2 flex items-center">
+                    <span className="text-3xl">{stat.icon}</span>
+                    <Typography
+                      variant="h6"
+                      className="ml-3 font-bold text-blue-600 underline"
+                    >
+                      {stat.label}
+                    </Typography>
+                  </div>
+                  <Typography
+                    variant="h5"
+                    className="text-center font-normal text-gray-700 lg:text-left"
+                  >
+                    {stat.value}
+                  </Typography>
+                </Card>
+              ))}
+            </div>
           </div>
 
           {/* Buying History Section */}
@@ -174,7 +195,7 @@ const ProfilePage = () => {
                           {log.combo || "No Combo"}
                         </td>
                         <td className="border border-gray-200 px-4 py-2">
-                          đ{log.totalAmount}
+                          {log.totalAmount} VND
                         </td>
                         <td className="border border-gray-200 px-4 py-2">
                           {new Date(log.createdAt).toLocaleString()}
@@ -185,6 +206,70 @@ const ProfilePage = () => {
                 </table>
               </div>
             </Card>
+          </div>
+
+          {/* Uploaded Files Section */}
+          <div className="mt-8 w-full max-w-5xl">
+            <Typography variant="h5" className="mb-4 font-bold text-blue-600">
+              Top 5 Recent Uploaded Files
+            </Typography>
+            <div className="flex flex-col gap-5">
+              {sortedFiles.length > 0 ? (
+                sortedFiles.slice(0, 5).map((file) => {
+                  const uploadDate = new Date(file.uploadTime);
+                  const formattedDate = `${uploadDate
+                    .getDate()
+                    .toString()
+                    .padStart(2, "0")}/${(uploadDate.getMonth() + 1)
+                    .toString()
+                    .padStart(2, "0")}/${uploadDate.getFullYear()}`;
+
+                  return (
+                    <Card
+                      key={file._id}
+                      className="flex flex-col gap-3 bg-white p-5 shadow-md md:flex-row md:items-center"
+                    >
+                      <div className="flex items-center justify-center">
+                        <img
+                          src={filetype[file.type]}
+                          alt="File Type"
+                          className="h-20 w-20"
+                        />
+                      </div>
+                      <div className="flex flex-1 flex-col justify-between">
+                        <Typography
+                          variant="h6"
+                          className="font-bold text-gray-700"
+                        >
+                          {file.name}
+                        </Typography>
+                        <Typography variant="small" className="text-gray-500">
+                          Page Number: {file.pageNum}
+                        </Typography>
+                      </div>
+                      <div className="flex flex-col items-end gap-2">
+                        <div className="rounded-full bg-green-500 px-4 py-1 text-white">
+                          <Typography
+                            variant="small"
+                            className="flex items-center gap-1"
+                          >
+                            ✔ Verified - Uploaded at {formattedDate}
+                          </Typography>
+                        </div>
+                      </div>
+                    </Card>
+                  );
+                })
+              ) : (
+                <Typography
+                  variant="h6"
+                  color="gray"
+                  className="mt-8 text-center"
+                >
+                  No uploaded files available.
+                </Typography>
+              )}
+            </div>
           </div>
         </>
       )}

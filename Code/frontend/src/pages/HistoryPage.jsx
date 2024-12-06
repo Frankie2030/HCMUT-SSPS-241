@@ -23,8 +23,11 @@ import { useGetPrinterQuery } from "../slices/printerApiSlice";
 import { useState } from "react";
 import moment from "moment";
 import Loading from "../components/Loading";
-
 import React from "react";
+
+// add
+import jsPDF from "jspdf";
+import "jspdf-autotable"; // Add support for table creation in jsPDF
 
 // Function to transform keys to title case
 const toTitleCase = (str) => {
@@ -170,6 +173,34 @@ const HistoryPage = () => {
     ),
   ];
 
+  const handleDownloadPDF = () => {
+    const doc = new jsPDF();
+    const tableColumnHeaders = [
+      "Log ID",
+      "File Name",
+      "Printer Name",
+      "Status",
+      "Schedule",
+    ];
+    const tableRows = logs?.map((log) => [
+      log._id,
+      files?.find((file) => file._id === log.fileId)?.name || "Unknown",
+      printers?.find((printer) => printer._id === log.printerId)?.number ||
+        "Unknown",
+      log.status,
+      moment(log.schedule).format("DD/MM/YYYY, h:mm:ss A"),
+    ]);
+
+    doc.text("Printing History", 14, 16);
+    doc.autoTable({
+      head: [tableColumnHeaders],
+      body: tableRows,
+      startY: 20,
+    });
+
+    doc.save("Printing_History.pdf");
+  };
+
   return isFilesLoading || isLogsLoading || isPrintersLoading ? (
     // <div className="flex h-screen items-center justify-center">Loading...</div>
     <Loading />
@@ -178,6 +209,11 @@ const HistoryPage = () => {
       <Typography variant="h4" className="mb-6 text-center">
         PRINTING HISTORY
       </Typography>
+      <div className="mb-4 flex justify-end">
+        <Button color="green" onClick={handleDownloadPDF}>
+          Download PDF
+        </Button>
+      </div>
       <VerticalTabs item={tabItems} />
       <LogDialog
         open={open}

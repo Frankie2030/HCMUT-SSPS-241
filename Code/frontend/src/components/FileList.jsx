@@ -1,10 +1,16 @@
 import filetype from "../assets/filetypeicon/filetype";
 import { CheckIcon, ExclamationTriangleIcon } from "@heroicons/react/24/solid";
-import { Button, Card } from "@material-tailwind/react";
+import {
+  Button,
+  Card,
+  Input,
+  Select,
+  Option,
+  Typography,
+} from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 import Pagination from "./Pagination";
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
 import PrinterInfoDialog from "./PrinterInfoDialog"; // Import the PrinterInfoDialog
 
 const statusIcon = {
@@ -46,7 +52,7 @@ const FileItem = ({ file, printer, onPrinterClick }) => {
             <>
               <p
                 className="cursor-pointer font-semibold text-blue-500"
-                onClick={() => onPrinterClick(printer)} // Trigger dialog open on click
+                onClick={() => onPrinterClick(printer, file._id)} // Pass printer and file ID
               >
                 Printer Name: {printer.number}
               </p>
@@ -84,29 +90,86 @@ const FileItem = ({ file, printer, onPrinterClick }) => {
 const FileList = ({ files, printers }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(3);
-  const [selectedPrinter, setSelectedPrinter] = useState(null); // State for selected printer
+  const [selectedPrinter, setSelectedPrinter] = useState(null);
+  const [selectedFileId, setSelectedFileId] = useState(null); // State for selected file ID
   const [dialogOpen, setDialogOpen] = useState(false);
 
-  const handlePrinterClick = (printer) => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [sortOption, setSortOption] = useState("default");
+
+  const handlePrinterClick = (printer, fileId) => {
+    console.log("Printer:", printer); // Debug printer object
+    console.log("File ID:", fileId); // Debug file ID
     setSelectedPrinter(printer);
+    setSelectedFileId(fileId); // Ensure fileId is set correctly
     setDialogOpen(true);
   };
 
   const handleDialogClose = () => {
     setDialogOpen(false);
     setSelectedPrinter(null);
+    setSelectedFileId(null); // Reset the file ID when dialog closes
   };
+
+  // Filter and sort files
+  const filteredAndSortedFiles = files
+    ?.filter((file) => {
+      const query = searchQuery.toLowerCase();
+      return (
+        file.name.toLowerCase().includes(query) ||
+        file.status.toLowerCase().includes(query)
+      );
+    })
+    .sort((a, b) => {
+      if (sortOption === "nameAsc") return a.name.localeCompare(b.name);
+      if (sortOption === "nameDesc") return b.name.localeCompare(a.name);
+      if (sortOption === "uploadDateAsc")
+        return new Date(a.uploadTime) - new Date(b.uploadTime);
+      if (sortOption === "uploadDateDesc")
+        return new Date(b.uploadTime) - new Date(a.uploadTime);
+      return 0; // Default sort
+    });
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = files?.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = filteredAndSortedFiles?.slice(
+    indexOfFirstItem,
+    indexOfLastItem,
+  );
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
+  useEffect(() => {
+    setCurrentPage(1); // Reset pagination on search or sort change
+  }, [searchQuery, sortOption]);
+
   return (
     <div className="flex flex-col gap-5">
+      {/* Search and Sort Section */}
+      <div className="flex flex-col items-center justify-between gap-4 border-b pb-4 md:flex-row md:gap-6">
+        <Input
+          label="Search Files"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Search by file name or status"
+          className="flex-grow"
+        />
+        <Select
+          label="Sort By"
+          value={sortOption}
+          onChange={(e) => setSortOption(e)}
+          className="flex-grow"
+        >
+          <Option value="default">Default</Option>
+          <Option value="nameAsc">Name (A-Z)</Option>
+          <Option value="nameDesc">Name (Z-A)</Option>
+          <Option value="uploadDateAsc">Upload Date (Oldest)</Option>
+          <Option value="uploadDateDesc">Upload Date (Newest)</Option>
+        </Select>
+      </div>
+
+      {/* File List */}
       {currentItems?.map((file) => {
-        // Find the printer that matches the file's printerId
         const printer = printers.find((p) => p._id === file.printerId);
         return (
           <FileItem
@@ -117,22 +180,35 @@ const FileList = ({ files, printers }) => {
           />
         );
       })}
-      <div className="self-end">
-        <Pagination
-          itemsPerPage={itemsPerPage}
-          totalItems={files?.length}
-          paginate={paginate}
-        />
-      </div>
+
+      {/* Pagination */}
+      {currentItems?.length > 0 && (
+        <div className="mt-4 self-center">
+          <Pagination
+            itemsPerPage={itemsPerPage}
+            totalItems={filteredAndSortedFiles?.length}
+            paginate={paginate}
+          />
+        </div>
+      )}
+
+      {/* No Files Message */}
+      {currentItems?.length === 0 && (
+        <Typography variant="h6" color="gray" className="mt-8 text-center">
+          No files match your search criteria.
+        </Typography>
+      )}
 
       {/* Printer Info Dialog */}
-      {selectedPrinter && (
-        <PrinterInfoDialog
-          open={dialogOpen}
-          handleOpen={handleDialogClose}
-          printer={selectedPrinter}
-        />
-      )}
+      {selectedPrinter &&
+        selectedFileId && ( // Ensure printer and file ID are set
+          <PrinterInfoDialog
+            open={dialogOpen}
+            handleOpen={handleDialogClose}
+            printer={selectedPrinter}
+            fileId={selectedFileId} // Pass the selected file ID
+          />
+        )}
     </div>
   );
 };

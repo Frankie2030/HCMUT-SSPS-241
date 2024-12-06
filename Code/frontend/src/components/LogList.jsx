@@ -106,7 +106,7 @@ const LogList = ({ files, printers, logs, filter, handleClick, admin }) => {
 
   return (
     <div className="flex flex-col gap-5">
-      {admin && (
+      {/* {admin && (
         <div className="mt-1 w-full self-end sm:w-40">
           <Input
             type="text"
@@ -115,7 +115,7 @@ const LogList = ({ files, printers, logs, filter, handleClick, admin }) => {
             label="User ID"
           />
         </div>
-      )}
+      )} */}
       {currentLogs?.map((log) => {
         const file = files?.find((file) => file._id === log.fileId);
         const printer = printers?.find(

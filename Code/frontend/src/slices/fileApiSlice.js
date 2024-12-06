@@ -1,7 +1,7 @@
 import { apiSlice } from "./apiSlice";
 import { FILE_URL } from "../constants";
 
-export const printerApiSlice = apiSlice.injectEndpoints({
+export const fileApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getFiles: builder.query({
       query: () => ({
@@ -37,6 +37,14 @@ export const printerApiSlice = apiSlice.injectEndpoints({
         url: `${FILE_URL}/store/${id}`,
       }),
     }),
+    updateFilePrinter: builder.mutation({
+      // Add the new mutation for updating the printer
+      query: ({ fileId, newPrinterId }) => ({
+        url: `${FILE_URL}/update-printer/${fileId}`,
+        method: "PUT",
+        body: { newPrinterId }, // Send the `newPrinterId` in the request body
+      }),
+    }),
   }),
 });
 
@@ -47,4 +55,5 @@ export const {
   useCreateFileMutation,
   useStoreFileMutation,
   useGetStoredFilesQuery,
-} = printerApiSlice;
+  useUpdateFilePrinterMutation, // Updated name
+} = fileApiSlice;
