@@ -8,6 +8,9 @@ import {
   DialogBody,
   DialogFooter,
   Alert,
+  Input,
+  Select,
+  Option,
 } from "@material-tailwind/react";
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
 import { useState, useEffect } from "react";
@@ -161,30 +164,217 @@ const PrinterItem = ({ printer, canSelect, showAlert }) => {
   );
 };
 
+// const PrinterList = ({ printers, canSelect }) => {
+//   const [currentPage, setCurrentPage] = useState(1);
+//   const [printersPerPage] = useState(3);
+//   const [alert, setAlert] = useState({ show: false, message: "", type: "" });
+
+//   const showAlert = (message, type) => {
+//     setAlert({ show: true, message, type });
+
+//     // Wait 1.5 seconds, then hide alert and reload the page
+//     setTimeout(() => {
+//       setAlert({ show: false, message: "", type: "" });
+//       window.location.reload();
+//     }, 1500);
+//   };
+
+//   const indexOfLastPrinter = currentPage * printersPerPage;
+//   const indexOfFirstPrinter = indexOfLastPrinter - printersPerPage;
+//   let enabledPrinters = printers;
+//   if (canSelect) {
+//     enabledPrinters = printers.filter(
+//       (printer) => printer.status === "enabled",
+//     );
+//   }
+//   const currentPrinters = enabledPrinters?.slice(
+//     indexOfFirstPrinter,
+//     indexOfLastPrinter,
+//   );
+
+//   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+//   useEffect(() => {
+//     setCurrentPage(1);
+//   }, [printers, canSelect]);
+
+//   return (
+//     <div className="relative flex min-h-[550px] flex-col gap-10">
+//       {alert.show && (
+//         <Alert
+//           color={alert.type === "success" ? "green" : "red"}
+//           className="fixed left-1/2 top-4 z-[1000] w-1/3 -translate-x-1/2 transform"
+//         >
+//           {alert.message}
+//         </Alert>
+//       )}
+
+//       {currentPrinters?.map((printer) => (
+//         <PrinterItem
+//           key={printer._id}
+//           printer={printer}
+//           canSelect={canSelect}
+//           showAlert={showAlert}
+//         />
+//       ))}
+
+//       {currentPrinters?.length > 0 && (
+//         <div className="self-end">
+//           <Pagination
+//             itemsPerPage={printersPerPage}
+//             totalItems={enabledPrinters?.length}
+//             paginate={paginate}
+//           />
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
+
+// const PrinterList = ({ printers, canSelect }) => {
+//   const [currentPage, setCurrentPage] = useState(1);
+//   const [printersPerPage] = useState(3);
+//   const [searchQuery, setSearchQuery] = useState("");
+//   const [sortOption, setSortOption] = useState("default");
+//   const [alert, setAlert] = useState({ show: false, message: "", type: "" });
+
+//   const showAlert = (message, type) => {
+//     setAlert({ show: true, message, type });
+//     setTimeout(() => {
+//       setAlert({ show: false, message: "", type: "" });
+//     }, 1500);
+//   };
+
+//   // Filter and sort printers
+//   const filteredAndSortedPrinters = printers
+//     ?.filter((printer) => {
+//       const query = searchQuery.toLowerCase();
+//       return (
+//         printer.number.toLowerCase().includes(query) ||
+//         printer.location.campus.toLowerCase().includes(query) ||
+//         printer.description.toLowerCase().includes(query)
+//       );
+//     })
+//     .sort((a, b) => {
+//       if (sortOption === "queueAsc") return a.queue - b.queue;
+//       if (sortOption === "queueDesc") return b.queue - a.queue;
+//       if (sortOption === "locationAsc")
+//         return a.location.campus.localeCompare(b.location.campus);
+//       if (sortOption === "locationDesc")
+//         return b.location.campus.localeCompare(a.location.campus);
+//       return 0; // Default sort (unsorted)
+//     });
+
+//   // Pagination logic
+//   const indexOfLastPrinter = currentPage * printersPerPage;
+//   const indexOfFirstPrinter = indexOfLastPrinter - printersPerPage;
+//   const currentPrinters = filteredAndSortedPrinters?.slice(
+//     indexOfFirstPrinter,
+//     indexOfLastPrinter,
+//   );
+
+//   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+//   useEffect(() => {
+//     setCurrentPage(1); // Reset pagination on search or sort change
+//   }, [searchQuery, sortOption]);
+
+//   return (
+//     <div className="relative flex min-h-[550px] flex-col gap-10">
+//       {/* Search and Sort Section */}
+//       <div className="mb-4 flex items-center justify-between">
+//         <Input
+//           label="Search Printers"
+//           value={searchQuery}
+//           onChange={(e) => setSearchQuery(e.target.value)}
+//           className="w-1/2"
+//         />
+//         <Select
+//           label="Sort By"
+//           value={sortOption}
+//           onChange={(e) => setSortOption(e)}
+//           className="w-1/3"
+//         >
+//           <Option value="default">Default</Option>
+//           <Option value="queueAsc">Queue (Ascending)</Option>
+//           <Option value="queueDesc">Queue (Descending)</Option>
+//           <Option value="locationAsc">Location (Ascending)</Option>
+//           <Option value="locationDesc">Location (Descending)</Option>
+//         </Select>
+//       </div>
+
+//       {/* Alert Section */}
+//       {alert.show && (
+//         <Alert
+//           color={alert.type === "success" ? "green" : "red"}
+//           className="fixed left-1/2 top-4 z-[1000] w-1/3 -translate-x-1/2 transform"
+//         >
+//           {alert.message}
+//         </Alert>
+//       )}
+
+//       {/* Printers List */}
+//       {currentPrinters?.map((printer) => (
+//         <PrinterItem
+//           key={printer._id}
+//           printer={printer}
+//           canSelect={canSelect}
+//           showAlert={showAlert}
+//         />
+//       ))}
+
+//       {/* Pagination */}
+//       {currentPrinters?.length > 0 && (
+//         <div className="self-end">
+//           <Pagination
+//             itemsPerPage={printersPerPage}
+//             totalItems={filteredAndSortedPrinters?.length}
+//             paginate={paginate}
+//           />
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
+
 const PrinterList = ({ printers, canSelect }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [printersPerPage] = useState(3);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [sortOption, setSortOption] = useState("default");
   const [alert, setAlert] = useState({ show: false, message: "", type: "" });
 
   const showAlert = (message, type) => {
     setAlert({ show: true, message, type });
-
-    // Wait 1.5 seconds, then hide alert and reload the page
     setTimeout(() => {
       setAlert({ show: false, message: "", type: "" });
-      window.location.reload();
     }, 1500);
   };
 
+  // Filter and sort printers
+  const filteredAndSortedPrinters = printers
+    ?.filter((printer) => {
+      const query = searchQuery.toLowerCase();
+      return (
+        printer.number.toLowerCase().includes(query) ||
+        printer.location.campus.toLowerCase().includes(query) ||
+        printer.description.toLowerCase().includes(query)
+      );
+    })
+    .sort((a, b) => {
+      if (sortOption === "queueAsc") return a.queue - b.queue;
+      if (sortOption === "queueDesc") return b.queue - a.queue;
+      if (sortOption === "locationAsc")
+        return a.location.campus.localeCompare(b.location.campus);
+      if (sortOption === "locationDesc")
+        return b.location.campus.localeCompare(a.location.campus);
+      return 0; // Default sort (unsorted)
+    });
+
+  // Pagination logic
   const indexOfLastPrinter = currentPage * printersPerPage;
   const indexOfFirstPrinter = indexOfLastPrinter - printersPerPage;
-  let enabledPrinters = printers;
-  if (canSelect) {
-    enabledPrinters = printers.filter(
-      (printer) => printer.status === "enabled",
-    );
-  }
-  const currentPrinters = enabledPrinters?.slice(
+  const currentPrinters = filteredAndSortedPrinters?.slice(
     indexOfFirstPrinter,
     indexOfLastPrinter,
   );
@@ -192,11 +382,35 @@ const PrinterList = ({ printers, canSelect }) => {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   useEffect(() => {
-    setCurrentPage(1);
-  }, [printers, canSelect]);
+    setCurrentPage(1); // Reset pagination on search or sort change
+  }, [searchQuery, sortOption]);
 
   return (
-    <div className="relative flex min-h-[550px] flex-col gap-10">
+    <div className="relative flex flex-col gap-8">
+      {/* Search and Sort Section */}
+      <div className="flex flex-col items-center justify-between gap-4 border-b pb-4 md:flex-row md:gap-6">
+        <Input
+          label="Search Printers"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Search by number, location, or description"
+          className="flex-grow"
+        />
+        <Select
+          label="Sort By"
+          value={sortOption}
+          onChange={(e) => setSortOption(e)}
+          className="flex-grow"
+        >
+          <Option value="default">Default</Option>
+          <Option value="queueAsc">Queue (Ascending)</Option>
+          <Option value="queueDesc">Queue (Descending)</Option>
+          <Option value="locationAsc">Location (Ascending)</Option>
+          <Option value="locationDesc">Location (Descending)</Option>
+        </Select>
+      </div>
+
+      {/* Alert Section */}
       {alert.show && (
         <Alert
           color={alert.type === "success" ? "green" : "red"}
@@ -206,6 +420,7 @@ const PrinterList = ({ printers, canSelect }) => {
         </Alert>
       )}
 
+      {/* Printers List */}
       {currentPrinters?.map((printer) => (
         <PrinterItem
           key={printer._id}
@@ -215,14 +430,22 @@ const PrinterList = ({ printers, canSelect }) => {
         />
       ))}
 
+      {/* Pagination */}
       {currentPrinters?.length > 0 && (
-        <div className="self-end">
+        <div className="mt-4 self-center">
           <Pagination
             itemsPerPage={printersPerPage}
-            totalItems={enabledPrinters?.length}
+            totalItems={filteredAndSortedPrinters?.length}
             paginate={paginate}
           />
         </div>
+      )}
+
+      {/* Show a message when no printers match the search */}
+      {currentPrinters?.length === 0 && (
+        <Typography variant="h6" color="gray" className="mt-8 text-center">
+          No printers match your search criteria.
+        </Typography>
       )}
     </div>
   );

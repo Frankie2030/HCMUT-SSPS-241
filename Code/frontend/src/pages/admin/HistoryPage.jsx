@@ -21,9 +21,14 @@ import { useState } from "react";
 import moment from "moment";
 import Loading from "../../components/Loading";
 
+// added
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+
 const LogDialog = ({ open, handleOpen, log }) => {
   const printingConfig = log?.printingProperties;
   const schedule = log?.schedule;
+
   return printingConfig ? (
     <Dialog open={open} handler={handleOpen}>
       <DialogHeader>Details of Printing History</DialogHeader>
@@ -155,12 +160,45 @@ const HistoryPage = () => {
     ),
   ];
 
+  const handleDownloadPDF = () => {
+    const doc = new jsPDF();
+    const tableColumnHeaders = [
+      "Log ID",
+      "File Name",
+      "Printer Name",
+      "Status",
+      "Scheduled Date",
+    ];
+    const tableRows = logs?.map((log) => [
+      log._id,
+      files?.find((file) => file._id === log.fileId)?.name || "Unknown",
+      printers?.find((printer) => printer._id === log.printerId)?.name ||
+        "Unknown",
+      log.status,
+      moment(log.schedule).format("DD/MM/YYYY, h:mm:ss A"),
+    ]);
+
+    doc.text("Printing History", 14, 16);
+    doc.autoTable({
+      head: [tableColumnHeaders],
+      body: tableRows,
+      startY: 20,
+    });
+
+    doc.save("Printing_History.pdf");
+  };
+
   return isFilesLoading || isLogsLoading || isPrintersLoading ? (
     // <div>Loading...</div>
     <Loading />
   ) : (
     <div className="flex flex-col">
-      <Typography variant="h4">PRINTING HISTORY</Typography>
+      <div className="mb-4 flex items-center justify-between">
+        <Typography variant="h4">PRINTING HISTORY</Typography>
+        <Button color="green" onClick={handleDownloadPDF}>
+          Download PDF
+        </Button>
+      </div>
       <VerticalTabs item={tabItems} />
       <LogDialog
         open={open}

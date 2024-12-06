@@ -24,6 +24,7 @@ import fileRoutes from "./routes/fileRoutes.js";
 import logRoutes from "./routes/logRoutes.js";
 import configRoutes from "./routes/configRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import buyingLogRoutes from "./routes/buyingLogRoutes.js";
 
 await connectDB();
 
@@ -75,6 +76,7 @@ app.use("/printer", printerRoutes);
 app.use("/file", fileRoutes);
 app.use("/log", logRoutes);
 app.use("/config", configRoutes);
+app.use("/api/buyingLogs", buyingLogRoutes); // Ensure this line is included
 
 // Serve static frontend files
 app.use(express.static(path.join(__dirname, "../frontend/dist")));

@@ -28,7 +28,7 @@ export const printerApiSlice = apiSlice.injectEndpoints({
         method: "DELETE",
       }),
     }),
-    updatePrinter: builder.mutation({
+    updatePrinterDetails: builder.mutation({
       query: ({ id, ...body }) => ({
         url: `${PRINTER_URL}/${id}`,
         method: "PUT",
@@ -43,5 +43,5 @@ export const {
   useAddPrinterMutation,
   useSetStatusMutation,
   useDeletePrinterMutation,
-  useUpdatePrinterMutation, // Export the new mutation hook
+  useUpdatePrinterDetailsMutation, // Updated name
 } = printerApiSlice;
