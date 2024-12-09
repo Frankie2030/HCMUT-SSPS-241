@@ -30,12 +30,16 @@ const ProfilePage = () => {
   const [sortOption, setSortOption] = useState("uploadTime");
 
   useEffect(() => {
-    const sorted = [...files].sort((a, b) => {
+    // Filter files uploaded by the current user
+    const userFiles = files?.filter((file) => file.userId === user.user._id);
+
+    const sorted = [...userFiles].sort((a, b) => {
       if (sortOption === "name") return a.name.localeCompare(b.name);
       if (sortOption === "uploadTime")
         return new Date(b.uploadTime) - new Date(a.uploadTime);
       return 0;
     });
+
     setSortedFiles(
       sorted.filter((file) =>
         file.name.toLowerCase().includes(searchTerm.toLowerCase()),
@@ -43,19 +47,23 @@ const ProfilePage = () => {
     );
   }, [files, sortOption, searchTerm]);
 
-  const totalPrintedFiles = logs?.filter(
+  // add for FIX BUG
+  // Filter logs for the current user
+  const userLogs = logs?.filter((log) => log.userId === user.user._id);
+
+  const totalPrintedFiles = userLogs?.filter(
     (log) => log.status === "completed",
   ).length;
-  const totalPrintedCopies = logs?.reduce((total, log) => {
+  const totalPrintedCopies = userLogs?.reduce((total, log) => {
     if (log.status === "completed") {
       return total + (log.printingProperties?.numberOfCopies || 0);
     }
     return total;
   }, 0);
-  const totalQueuedFiles = logs?.filter(
+  const totalQueuedFiles = userLogs?.filter(
     (log) => log.status === "queued",
   ).length;
-  const totalCanceledFiles = logs?.filter(
+  const totalCanceledFiles = userLogs?.filter(
     (log) => log.status === "canceled",
   ).length;
 

@@ -74,6 +74,7 @@ app.use("/auth", authRoutes);
 app.use("/auth/users", userRoutes); // Assuming "auth/users" as base path
 app.use("/printer", printerRoutes);
 app.use("/file", fileRoutes);
+app.use("/api/file", fileRoutes);
 app.use("/log", logRoutes);
 app.use("/config", configRoutes);
 app.use("/api/buyingLogs", buyingLogRoutes); // Ensure this line is included

@@ -8,6 +8,7 @@ import { Card, Button, Input } from "@material-tailwind/react";
 import moment from "moment";
 import Pagination from "./Pagination";
 import { useEffect, useState } from "react";
+import { useGetUserByIdQuery } from "../slices/userApiSlice";
 
 const statusIcon = {
   queued: <ClockIcon className="w-6 sm:w-8" />,
@@ -83,6 +84,7 @@ const LogList = ({ files, printers, logs, filter, handleClick, admin }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [logsPerPage] = useState(3);
   const [userIDFilter, setUserIDFilter] = useState("");
+  const [userCache, setUserCache] = useState({}); // Cache for user data
 
   const indexOfLastLog = currentPage * logsPerPage;
   const indexOfFirstLog = indexOfLastLog - logsPerPage;
@@ -121,6 +123,17 @@ const LogList = ({ files, printers, logs, filter, handleClick, admin }) => {
         const printer = printers?.find(
           (printer) => printer._id === log.printerId,
         );
+
+        // Fetch user data if not in cache
+        let user = userCache[log.userId];
+        if (!user) {
+          const { data } = useGetUserByIdQuery(log.userId);
+          if (data) {
+            setUserCache((prev) => ({ ...prev, [log.userId]: data.user }));
+            user = data.user;
+          }
+        }
+
         if (!file || !printer) return null;
         return (
           <LogItem
@@ -130,6 +143,7 @@ const LogList = ({ files, printers, logs, filter, handleClick, admin }) => {
             log={log}
             handleClick={handleClick}
             admin={admin}
+            user={user}
           />
         );
       })}
