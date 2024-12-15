@@ -114,6 +114,53 @@ npm install
 npm run dev
 ```
 
+If it is running the command `npm run dev` successfully, then just open the following link on the browser `http://localhost:5173/` and experience our application.
+
+---
+### Note for Windows
+If while running the command ```npm init -y``` or `npm -v` in the Powershell and get the error message like:
+```
+File C:\Program Files\nodejs\npm.ps1 cannot be loaded because running scripts is disabled on this system.
+```
+
+Follow these steps to resolve the issue:
+
+**1️. Open PowerShell as Administrator**
+- Search for PowerShell in the Start Menu.
+- Right-click and select "Run as Administrator".
+
+<br>
+
+**2️. Check the Current Execution Policy**
+- Run the following command to see the current policy:
+  ```
+  Get-ExecutionPolicy
+  ```
+- If the output is Restricted, it means scripts are blocked by default.
+
+<br>
+
+**3️. Allow Script Execution Temporarily**
+- Update the execution policy to RemoteSigned for the current user:
+  ```
+  Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+  ```
+- Scope: Applies only to the current user (no system-wide changes).
+- RemoteSigned: Allows local scripts to run, and requires remote scripts to be signed.
+
+<br>
+
+**4. Test npm Command**
+- After updating the execution policy, test if npm works:
+  `npm -v`
+
+<br>
+
+**5. Reset Execution Policy (Optional)**
+- If you prefer stricter security after running your npm commands, you can reset the execution policy:
+  `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Restricted`
+
+---
 
 <h2 align="center">💟 Contributors 💟</h2>
 
