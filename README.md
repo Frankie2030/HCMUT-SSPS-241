@@ -36,6 +36,12 @@
 - **Nguyen Minh Khoi**: 2252376
 - **Nguyen Quang Vinh**: 2213973
 
+Here is our team presentation video:
+
+- <a href="https://shorturl.at/vd8Q9" target="_blank">Google Drive Video Link</a>
+- <a href="https://www.youtube.com/watch?v=dgCjzXuEE-8" target="_blank">YouTube Video Link</a>
+
+
 ---
 
 <!-- <h2 align="center">📂 Dataset Links for Kaggle Notebooks 📂</h2>
