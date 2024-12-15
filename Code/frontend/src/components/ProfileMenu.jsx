@@ -22,7 +22,7 @@ const ProfileMenu = () => {
   const { avatar, role } = useSelector((state) => state.auth.userData);
 
   const handleLogout = async () => {
-    window.open("http://localhost:5000/auth/logout", "_self");
+    window.open("http://localhost:5001/auth/logout", "_self");
     dispatch(logout());
   };
 

@@ -62,7 +62,7 @@ const FilePreviewPage = () => {
         className="col-span-3 flex flex-col items-center self-end"
       >
         <Document
-          file={`http://localhost:5000/file/store/${id}`}
+          file={`http://localhost:5001/file/store/${id}`}
           onLoadSuccess={onDocumentLoadSuccess}
           options={options}
         >
