@@ -101,7 +101,7 @@ The **Student Smart Printing Service (HCMUT_SSPS)** is a web and mobile applicat
 ### Installation and Running Steps:
 
 ```bash
-   git clone https://github.com/pdz1804/HCMUT-SSPS-241
+   git clone https://github.com/Frankie2030/HCMUT-SSPS-241.git
    cd /HCMUT-SSPS-241
    cd /frontend
    npm init -y
