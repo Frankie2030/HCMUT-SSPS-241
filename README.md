@@ -79,10 +79,11 @@ The **Student Smart Printing Service (HCMUT_SSPS)** is a web and mobile applicat
 
 ## Setup and Installation
 
-### Prerequisites:
+### Prerequisites (MERN stack):
 - **Node.js** for the backend
 - **MongoDB** (for storing student, printer, and log data)
 - **React** (for frontend development)
+- **Express**
 
 ### Installation Steps:
 1. Clone the repository: 
