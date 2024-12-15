@@ -17,7 +17,7 @@
 
 ---
 
-<h2 align="center">⚒️ Languages-Frameworks-Tools ⚒️</h2>
+<h2 align="center">⚒️ Languages - Frameworks - Tools ⚒️</h2>
 
 <div align="center">
   <img src="https://skillicons.dev/icons?i=html,css,javascript,vite,react,nodejs,vscode,github,git,md" alt="Tools and Languages" />
@@ -83,7 +83,7 @@ The **Student Smart Printing Service (HCMUT_SSPS)** is a web and mobile applicat
 - **Node.js** for the backend
 - **MongoDB** (for storing student, printer, and log data)
 - **React** (for frontend development)
-- **Express**
+- **Express**: haha
 
 ### Installation Steps:
 1. Clone the repository: 
