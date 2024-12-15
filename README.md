@@ -14,6 +14,7 @@
 </div>
 
 <h2 align="center">💡 Project: HCMUT_SSPS: Student Smart Printing Service 💡</h2>
+<h2 align="center">Semester 241</h2>
 <h3 align="center">💡 Class: CC01 - Group: 08  💡</h2>
 
 
