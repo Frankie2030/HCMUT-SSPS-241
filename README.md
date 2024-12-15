@@ -41,6 +41,9 @@ Here is our team presentation video:
 - <a href="https://shorturl.at/vd8Q9" target="_blank">Google Drive Video Link</a>
 - <a href="https://www.youtube.com/watch?v=dgCjzXuEE-8" target="_blank">YouTube Video Link</a>
 
+<p align="center">
+  <img src="demo.gif" alt="Demo GIF" style="width:100%; height:auto;">
+</p>
 
 ---
 
