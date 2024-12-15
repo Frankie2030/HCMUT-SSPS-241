@@ -84,34 +84,36 @@ The **Student Smart Printing Service (HCMUT_SSPS)** is a web and mobile applicat
 
 ### Authentication:
 - All users (students and SPSO) are authenticated using the Google Authentication (OAuth 2.0) for demo instead of using the university's **HCMUT_SSO** authentication service.
+- Currently, only the SPSO accounts hardcode-specified can edit roles of other students and SPSOs.
 
 ### Web & Mobile:
 - The system is accessible through both a web-based app and a mobile app, ensuring students can print documents from any device.
 
 ---
 
-## Setup and Installation
+# Setup and Installation
 
-### Prerequisites (MERN stack):
-- **Node.js**: JavaScript runtime environment to run the backend code.
+## Prerequisites (MERN stack):
+- **Node.js**: JavaScript runtime environment to run the backend code. **Node.js v22 or later is required.** Download the latest version here: [https://nodejs.org/en](https://nodejs.org/en).
 - **MongoDB**: Database for storing data.
 - **React**: Frontend framework for building user interfaces.
 - **Express**: Backend framework for handling server-side logic, routing, and API creation.
 
-### Installation and Running Steps:
+## Installation and Running Steps:
 
 ```bash
-   git clone https://github.com/Frankie2030/HCMUT-SSPS-241.git
-   cd /HCMUT-SSPS-241
-   cd /frontend
-   npm init -y
-   npm i
-   cd ..
-   npm init -y
-   npm i
-   npm run dev
+git clone https://github.com/Frankie2030/HCMUT-SSPS-241.git
+cd HCMUT-SSPS-241
+cd Code
+cd frontend
+npm init -y
+npm install
+cd ..
+npm init -y
+npm install
+npm run dev
 ```
---- 
+
 
 <h2 align="center">💟 Contributors 💟</h2>
 
