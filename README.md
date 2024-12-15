@@ -125,13 +125,13 @@ File C:\Program Files\nodejs\npm.ps1 cannot be loaded because running scripts is
 
 Follow these steps to resolve the issue:
 
-**1️. Open PowerShell as Administrator**
+**1. Open PowerShell as Administrator**
 - Search for PowerShell in the Start Menu.
 - Right-click and select "Run as Administrator".
 
 <br>
 
-**2️. Check the Current Execution Policy**
+**2. Check the Current Execution Policy**
 - Run the following command to see the current policy:
   ```
   Get-ExecutionPolicy
@@ -140,7 +140,7 @@ Follow these steps to resolve the issue:
 
 <br>
 
-**3️. Allow Script Execution Temporarily**
+**3. Allow Script Execution Temporarily**
 - Update the execution policy to RemoteSigned for the current user:
   ```
   Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
