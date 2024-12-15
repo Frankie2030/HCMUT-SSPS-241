@@ -14,6 +14,8 @@
 </div>
 
 <h2 align="center">💡 Project: HCMUT_SSPS: Student Smart Printing Service 💡</h2>
+<h3 align="center">💡 Class: CC01 - Group: 08  💡</h2>
+
 
 ---
 
@@ -22,6 +24,16 @@
 <div align="center">
   <img src="https://skillicons.dev/icons?i=html,css,javascript,vite,react,nodejs,vscode,github,git,md" alt="Tools and Languages" />
 </div>
+
+---
+
+## Team Members
+
+- **Nguyen Quang Phu**: 2252621
+- **Nguyen Ngoc Khoi**: 2252378
+- **Nguyen Nhat Khoi**: 2252379
+- **Nguyen Minh Khoi**: 2252376
+- **Nguyen Quang Vinh**: 2213973
 
 ---
 
@@ -70,7 +82,7 @@ The **Student Smart Printing Service (HCMUT_SSPS)** is a web and mobile applicat
 - Each printer has a unique ID, brand name, model, a short description, and a physical location (campus, building, and room number).
 
 ### Authentication:
-- All users (students and SPSO) are authenticated using the university's **HCMUT_SSO** authentication service.
+- All users (students and SPSO) are authenticated using the Google Authentication (OAuth 2.0) for demo instead of using the university's **HCMUT_SSO** authentication service.
 
 ### Web & Mobile:
 - The system is accessible through both a web-based app and a mobile app, ensuring students can print documents from any device.
@@ -80,16 +92,24 @@ The **Student Smart Printing Service (HCMUT_SSPS)** is a web and mobile applicat
 ## Setup and Installation
 
 ### Prerequisites (MERN stack):
-- **Node.js** for the backend
-- **MongoDB** (for storing student, printer, and log data)
-- **React** (for frontend development)
-- **Express**: haha
+- **Node.js**: JavaScript runtime environment to run the backend code.
+- **MongoDB**: Database for storing data.
+- **React**: Frontend framework for building user interfaces.
+- **Express**: Backend framework for handling server-side logic, routing, and API creation.
 
-### Installation Steps:
-1. Clone the repository: 
-   ```bash
+### Installation and Running Steps:
+
+```bash
    git clone https://github.com/pdz1804/HCMUT-SSPS-241
-
+   cd /HCMUT-SSPS-241
+   cd /frontend
+   npm init -y
+   npm i
+   cd ..
+   npm init -y
+   npm i
+   npm run dev
+```
 --- 
 
 <h2 align="center">💟 Contributors 💟</h2>
